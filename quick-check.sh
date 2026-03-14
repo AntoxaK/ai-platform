@@ -1,8 +1,11 @@
 #!/bin/bash
 # Швидка перевірка стану AI Platform
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PLATFORM_VERSION=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null || echo "dev")
+
 echo "═══════════════════════════════════════════════"
-echo "  AI Platform - Швидка перевірка"
+echo "  AI Platform v${PLATFORM_VERSION} — Швидка перевірка"
 echo "═══════════════════════════════════════════════"
 echo ""
 

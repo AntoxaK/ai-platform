@@ -19,6 +19,12 @@ log_info()  { echo -e "${GREEN}[INFO]${NC} $1"; }
 log_warn()  { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
+PLATFORM_VERSION=$(cat "$SCRIPT_DIR/VERSION" 2>/dev/null || echo "dev")
+echo -e "${GREEN}╔══════════════════════════════════════╗${NC}"
+echo -e "${GREEN}║   AI Platform v${PLATFORM_VERSION}$(printf '%*s' $((22-${#PLATFORM_VERSION})) '')║${NC}"
+echo -e "${GREEN}╚══════════════════════════════════════╝${NC}"
+echo ""
+
 # --- Pre-flight checks ---
 
 # Check Docker
