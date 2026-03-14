@@ -1,6 +1,6 @@
-# WAN 2.2 Image-to-Video — Готово до використання! 🎬
+# WAN 2.2 Image-to-Video — Ready to Use! 🎬
 
-## ✅ Всі моделі встановлені:
+## ✅ All models installed:
 
 ```
 models/
@@ -17,107 +17,107 @@ models/
     └── wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors ✓ (1.2 GB)
 ```
 
-**Всього:** ~47 GB моделей для відео генерації
+**Total:** ~47 GB of models for video generation
 
 ---
 
-## 🚀 Як використовувати (3 кроки):
+## 🚀 How to use (3 steps):
 
-### Крок 1: Відкрити ComfyUI
+### Step 1: Open ComfyUI
 ```
 http://127.0.0.1:7821
 ```
 
-### Крок 2: Завантажити офіційний WAN workflow
+### Step 2: Load official WAN workflow
 
-**Варіант A:** Перетягнути файл
-- Перетягніть файл на ComfyUI:
+**Option A:** Drag and drop file
+- Drag file to ComfyUI:
   ```
   /mnt/g/Git/GitHub/ai-platform/WAN_WORKFLOW.json
   ```
-- Або у Windows:
+- Or on Windows:
   ```
   G:\Git\GitHub\ai-platform\WAN_WORKFLOW.json
   ```
 
-**Варіант B:** Load через UI
-1. Натиснути **Load** (праворуч внизу)
-2. Клікнути **Upload**
-3. Вибрати `WAN_WORKFLOW.json`
+**Option B:** Load via UI
+1. Press **Load** (bottom right)
+2. Click **Upload**
+3. Select `WAN_WORKFLOW.json`
 
-### Крок 3: Налаштувати і запустити
+### Step 3: Configure and run
 
-#### У workflow з'являться ноди:
+#### Nodes will appear in workflow:
 1. **CLIPLoader** → umt5_xxl_fp8_e4m3fn_scaled.safetensors ✓
-2. **CLIPTextEncode (Positive)** → ваш промпт китайською
-3. **CLIPTextEncode (Negative)** → негативний промпт
-4. **LoadImage** → завантажте зображення
-5. **DiffusionModelLoader** → wan2.2_i2v_high_noise або low_noise
+2. **CLIPTextEncode (Positive)** → your prompt in Chinese
+3. **CLIPTextEncode (Negative)** → negative prompt
+4. **LoadImage** → upload image
+5. **DiffusionModelLoader** → wan2.2_i2v_high_noise or low_noise
 6. **VAELoader** → wan_2.1_vae.safetensors
-7. **KSampler** → генерація
-8. **VHS_VideoCombine** → збереження відео
+7. **KSampler** → generation
+8. **VHS_VideoCombine** → save video
 
-#### Що змінити:
+#### What to change:
 
-**1. Завантажити зображення:**
-- Нода **LoadImage** → Choose File
-- Роздільність: 768x768 або 1024x576
+**1. Upload image:**
+- Node **LoadImage** → Choose File
+- Resolution: 768x768 or 1024x576
 
-**2. Вибрати модель:**
-- Нода **DiffusionModelLoader**:
-  - `wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors` — динамічні рухи
-  - `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` — плавні рухи
+**2. Choose model:**
+- Node **DiffusionModelLoader**:
+  - `wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors` — dynamic motion
+  - `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors` — smooth motion
 
-**3. Написати промпт (китайською!):**
-- Workflow використовує китайські промпти
-- Приклад: `一只可爱的猫咪在走路` (кіт що йде)
-- Або англійською, але якість гірша
+**3. Write prompt (in Chinese!):**
+- Workflow uses Chinese prompts
+- Example: `一只可爱的猫咪在走路` (cat walking)
+- Or in English, but quality is worse
 
-**4. Налаштувати параметри:**
-- `num_frames`: 14-25 (кількість кадрів)
-- `motion_strength`: 0.5-1.0 (сила руху)
-- `fps`: 6-8 (швидкість відео)
+**4. Adjust parameters:**
+- `num_frames`: 14-25 (number of frames)
+- `motion_strength`: 0.5-1.0 (motion strength)
+- `fps`: 6-8 (video speed)
 
 **5. Queue Prompt:**
-- Натиснути **Queue Prompt**
-- Чекати 5-15 хвилин
-- Відео з'явиться в `output/`
+- Press **Queue Prompt**
+- Wait 5-15 minutes
+- Video appears in `output/`
 
 ---
 
-## 📊 Порівняння моделей:
+## 📊 Model comparison:
 
-| Модель | Використання | VRAM | Швидкість |
-|--------|--------------|------|-----------|
-| **High Noise** | Активні рухи, динамічні сцени | ~12 GB | 5-10 хв |
-| **Low Noise** | Плавні рухи, статичні об'єкти | ~12 GB | 5-10 хв |
-| **+ LightX2V LoRA** | Швидка генерація (4 кроки) | ~12 GB | 2-5 хв |
+| Model | Use | VRAM | Speed |
+|-------|-----|------|-------|
+| **High Noise** | Active motion, dynamic scenes | ~12 GB | 5-10 min |
+| **Low Noise** | Smooth motion, static objects | ~12 GB | 5-10 min |
+| **+ LightX2V LoRA** | Fast generation (4 steps) | ~12 GB | 2-5 min |
 
 ---
 
-## 🎯 Приклади промптів:
+## 🎯 Example prompts:
 
-### Китайською (краща якість):
+### Chinese (better quality):
 
-**Кіт що йде:**
+**Cat walking:**
 ```
 正面: 一只可爱的猫咪在草地上慢慢走路，阳光明媚，高质量，4k
 负面: 色调艳丽，过曝，静态，模糊，低质量
 ```
 
-**Людина:**
+**Person:**
 ```
 正面: 一个女孩在海滩上奔跑，长发飘扬，自然光线，专业摄影
 负面: 静止不动，模糊，变形，低质量
 ```
 
-**Пейзаж:**
+**Landscape:**
 ```
 正面: 美丽的山景，云朵移动，树叶轻轻摇曳，高质量视频
 负面: 静态，过曝，模糊
 ```
 
-### Англійською (працює, але гірше):
+### English (works, but worse):
 
 **Cat walking:**
 ```
@@ -127,80 +127,80 @@ Negative: static, blurry, low quality, deformed
 
 ---
 
-## 🔧 Додаткові можливості:
+## 🔧 Additional features:
 
-### Використання LightX2V LoRA (швидша генерація):
+### Using LightX2V LoRA (faster generation):
 
-У workflow є нода **LoraLoader**:
-1. Вибрати LoRA:
+Workflow has **LoraLoader** node:
+1. Select LoRA:
    - `wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors`
    - `wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors`
-2. Встановити weight: 0.8-1.0
-3. У KSampler змінити steps на 4 (замість 20)
+2. Set weight: 0.8-1.0
+3. In KSampler change steps to 4 (instead of 20)
 
-**Результат:** Генерація за 2-5 хвилин замість 5-10!
+**Result:** Generation in 2-5 minutes instead of 5-10!
 
 ---
 
-## 📝 Параметри KSampler:
+## 📝 KSampler parameters:
 
-| Параметр | Рекомендоване | Опис |
-|----------|---------------|------|
-| **steps** | 20 (або 4 з LoRA) | Кількість кроків |
+| Parameter | Recommended | Description |
+|-----------|-------------|-------------|
+| **steps** | 20 (or 4 with LoRA) | Number of steps |
 | **cfg** | 2.5-3.5 | CFG scale |
-| **sampler_name** | euler | Семплер |
-| **scheduler** | normal | Планувальник |
-| **denoise** | 1.0 | Денойзинг |
+| **sampler_name** | euler | Sampler |
+| **scheduler** | normal | Scheduler |
+| **denoise** | 1.0 | Denoising |
 
 ---
 
-## ⚠️ Важливо:
+## ⚠️ Important:
 
-### ✅ ТАК використовувати:
-- CLIPLoader з umt5_xxl (це WAN text encoder!)
-- CLIPTextEncode для промптів
-- Китайські промпти для кращої якості
-- 14-25 кадрів для відео
+### ✅ DO use:
+- CLIPLoader with umt5_xxl (this is WAN text encoder!)
+- CLIPTextEncode for prompts
+- Chinese prompts for better quality
+- 14-25 frames for video
 
-### ❌ НЕ використовувати:
-- Звичайний CLIP для SD моделей
-- Надто довгі промпти (>512 токенів)
-- Занадто високу роздільність (>1024x1024)
+### ❌ DON'T use:
+- Regular CLIP for SD models
+- Too long prompts (>512 tokens)
+- Too high resolution (>1024x1024)
 
 ---
 
-## 🎬 Результат:
+## 🎬 Result:
 
-Після генерації отримаєте:
-- MP4 відео у `output/`
-- Тривалість: ~2-4 секунди
+After generation you'll get:
+- MP4 video in `output/`
+- Duration: ~2-4 seconds
 - FPS: 6-8
-- Роздільність: така ж як вхідне зображення
+- Resolution: same as input image
 
 ---
 
 ## 🔍 Troubleshooting:
 
-### Помилка: "CUDA out of memory"
-**Рішення:**
-- Зменшити `num_frames` до 14
-- Закрити SwarmUI
-- Використати LightX2V LoRA
+### Error: "CUDA out of memory"
+**Solution:**
+- Reduce `num_frames` to 14
+- Close SwarmUI
+- Use LightX2V LoRA
 
-### Помилка: "Model not found"
-**Рішення:**
-- Перевірити шляхи до моделей
-- Перезапустити ComfyUI: `bash start.sh`
+### Error: "Model not found"
+**Solution:**
+- Check model paths
+- Restart ComfyUI: `bash start.sh`
 
-### Відео статичне (немає руху)
-**Рішення:**
-- Збільшити `motion_strength` до 0.8-1.0
-- Використати `high_noise` модель
-- Покращити промпт (додати дієслова руху)
+### Video is static (no motion)
+**Solution:**
+- Increase `motion_strength` to 0.8-1.0
+- Use `high_noise` model
+- Improve prompt (add action verbs)
 
 ---
 
-## 📖 Офіційна документація:
+## 📖 Official documentation:
 
 - **Comfy Docs:** https://docs.comfy.org/tutorials/video/wan/wan2_2
 - **WAN 2.2 GitHub:** https://github.com/ali-vilab/VGen
@@ -208,12 +208,12 @@ Negative: static, blurry, low quality, deformed
 
 ---
 
-**Готово! Відкрийте ComfyUI і завантажте workflow!** 🎬✨
+**Ready! Open ComfyUI and upload the workflow!** 🎬✨
 
-**Швидкий старт:**
+**Quick start:**
 ```bash
-# 1. ComfyUI вже запущений на http://127.0.0.1:7821
-# 2. Перетягніть WAN_WORKFLOW.json
-# 3. Завантажте зображення
+# 1. ComfyUI already running at http://127.0.0.1:7821
+# 2. Drag and drop WAN_WORKFLOW.json
+# 3. Upload image
 # 4. Queue Prompt!
 ```

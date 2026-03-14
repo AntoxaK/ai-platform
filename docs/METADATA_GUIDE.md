@@ -1,87 +1,87 @@
-# 📝 Як читати промпти з згенерованих зображень
+# 📝 How to Read Prompts from Generated Images
 
-## ✅ Так! Всі параметри зберігаються всередині PNG
+## ✅ Yes! All parameters are saved inside PNG
 
-SwarmUI зберігає **всі дані генерації** всередині PNG файлу:
-- ✅ Промпт
-- ✅ Негативний промпт
-- ✅ Модель
-- ✅ Seed (для відтворення)
+SwarmUI saves **all generation data** inside PNG file:
+- ✅ Prompt
+- ✅ Negative prompt
+- ✅ Model
+- ✅ Seed (for reproduction)
 - ✅ Steps, CFG Scale
-- ✅ Розмір зображення
-- ✅ Час генерації
-- ✅ Дата створення
+- ✅ Image size
+- ✅ Generation time
+- ✅ Creation date
 
 ---
 
-## 🎯 Способи читання
+## 🎯 Ways to read
 
-### 1️⃣ Через SwarmUI (найпростіший) ⭐
+### 1️⃣ Via SwarmUI (simplest) ⭐
 
-1. Відкрий http://127.0.0.1:7801
-2. **Image History** (іконка годинника зліва)
-3. Клікни на зображення
-4. Побачиш **всі параметри** внизу
-5. **Reuse Parameters** → скопіює все для повторної генерації!
+1. Open http://127.0.0.1:7801
+2. **Image History** (clock icon on left)
+3. Click image
+4. See **all parameters** at bottom
+5. **Reuse Parameters** → copies everything for re-generation!
 
-**Переваги:**
-- ✅ Візуальний інтерфейс
-- ✅ Одна кнопка для копіювання параметрів
-- ✅ Історія всіх генерацій
+**Advantages:**
+- ✅ Visual interface
+- ✅ One button to copy parameters
+- ✅ History of all generations
 
 ---
 
-### 2️⃣ Через Python скрипт (для командного рядку)
+### 2️⃣ Via Python script (for command line)
 
-**У проекті є готовий скрипт:**
+**Project has ready script:**
 ```bash
 python3 read-prompt.py output/local/raw/2026-02-01/1724001-*.png
 ```
 
-**Вивід:**
+**Output:**
 ```
-✨ ПРОМПТ:
+✨ PROMPT:
    beautiful sunset over mountains, 8k, detailed
 
-⚙️  ПАРАМЕТРИ:
+⚙️  PARAMETERS:
    Model:       dreamshaper_8
    Seed:        675311893
    Steps:       20
    CFG Scale:   7.0
    Size:        512×512
 
-⏱️  СТАТИСТИКА:
-   Дата:        2026-02-01
-   Генерація:   2.72 sec
+⏱️  STATISTICS:
+   Date:        2026-02-01
+   Generation:  2.72 sec
 ```
 
-**Для всіх файлів у папці:**
+**For all files in folder:**
 ```bash
 python3 read-prompt.py output/local/raw/2026-02-01/*.png
 ```
 
 ---
 
-### 3️⃣ Через ExifTool (якщо встановлено)
+### 3️⃣ Via ExifTool (if installed)
 
-**Встановлення:**
+**Installation:**
 ```bash
 sudo apt install libimage-exiftool-perl
 ```
 
-**Читання метаданих:**
+**Read metadata:**
 ```bash
 exiftool "output/local/raw/2026-02-01/1724001-*.png"
 ```
 
-**Тільки параметри:**
+**Only parameters:**
 ```bash
 exiftool -parameters "output/local/raw/2026-02-01/1724001-*.png" | jq
 ```
 
 ---
 
-### 4️⃣ Через strings (швидко, але некрасиво)
+### 4️⃣ Via strings (fast, but ugly)
 
 ```bash
 strings "output/local/raw/2026-02-01/1724001-*.png" | grep -A 20 "prompt"
@@ -89,25 +89,25 @@ strings "output/local/raw/2026-02-01/1724001-*.png" | grep -A 20 "prompt"
 
 ---
 
-## 🔄 Як відтворити зображення
+## 🔄 How to reproduce image
 
-### Спосіб 1: Через SwarmUI GUI
+### Method 1: Via SwarmUI GUI
 
-1. **Image History** → клікни на зображення
-2. **Reuse Parameters** (кнопка внизу)
-3. **Generate** → буде використано той самий seed та параметри
+1. **Image History** → click image
+2. **Reuse Parameters** (button at bottom)
+3. **Generate** → will use same seed and parameters
 
-**Результат:** Точна копія оригіналу ✅
+**Result:** Exact copy of original ✅
 
 ---
 
-### Спосіб 2: Вручну скопіюй параметри
+### Method 2: Copy parameters manually
 
 ```bash
-# Витягни промпт та seed
+# Extract prompt and seed
 python3 read-prompt.py output/local/raw/2026-02-01/1724001-*.png
 
-# Використай ці параметри:
+# Use these parameters:
 Prompt: "beautiful sunset over mountains, 8k, detailed"
 Model: dreamshaper_8
 Seed: 675311893
@@ -116,15 +116,15 @@ CFG Scale: 7.0
 Size: 512×512
 ```
 
-У SwarmUI:
-1. Вибери модель `dreamshaper_8`
-2. Введи промпт
-3. Встав seed: `675311893`
-4. Натисни **Generate**
+In SwarmUI:
+1. Choose model `dreamshaper_8`
+2. Enter prompt
+3. Paste seed: `675311893`
+4. Press **Generate**
 
 ---
 
-## 📊 Структура метаданих (JSON)
+## 📊 Metadata structure (JSON)
 
 ```json
 {
@@ -157,36 +157,36 @@ Size: 512×512
 
 ---
 
-## 💡 Поради
+## 💡 Tips
 
-### Для організації зображень:
+### For organizing images:
 
-1. **За промптом:**
+1. **By prompt:**
    ```bash
-   # Знайди всі зображення з певним промптом
+   # Find all images with specific prompt
    for img in output/local/raw/*/*.png; do
        python3 read-prompt.py "$img" | grep -q "sunset" && echo "$img"
    done
    ```
 
-2. **За моделлю:**
+2. **By model:**
    ```bash
-   # Знайди всі зображення згенеровані на dreamshaper_8
+   # Find all images generated on dreamshaper_8
    for img in output/local/raw/*/*.png; do
        python3 read-prompt.py "$img" | grep -q "dreamshaper_8" && echo "$img"
    done
    ```
 
-3. **За seed (для пошуку дублікатів):**
+3. **By seed (find duplicates):**
    ```bash
    python3 read-prompt.py output/local/raw/*/*.png | grep "Seed:"
    ```
 
 ---
 
-## 🔧 Додаткові інструменти
+## 🔧 Additional tools
 
-### Batch екс extraction (витягнути всі промпти у CSV):
+### Batch extraction (export all prompts to CSV):
 
 ```bash
 #!/bin/bash
@@ -194,7 +194,7 @@ echo "Filename,Prompt,Model,Seed,Steps,Size" > prompts.csv
 
 for img in output/local/raw/*/*.png; do
     data=$(python3 read-prompt.py "$img")
-    prompt=$(echo "$data" | grep "ПРОМПТ:" -A 1 | tail -1 | xargs)
+    prompt=$(echo "$data" | grep "PROMPT:" -A 1 | tail -1 | xargs)
     model=$(echo "$data" | grep "Model:" | awk '{print $2}')
     seed=$(echo "$data" | grep "Seed:" | awk '{print $2}')
     steps=$(echo "$data" | grep "Steps:" | awk '{print $2}')
@@ -203,16 +203,16 @@ for img in output/local/raw/*/*.png; do
     echo "$img,$prompt,$model,$seed,$steps,$size" >> prompts.csv
 done
 
-echo "✅ Експорт завершено: prompts.csv"
+echo "✅ Export complete: prompts.csv"
 ```
 
 ---
 
-## ✅ Висновок
+## ✅ Conclusion
 
-**Твої зображення самодостатні!**
-- 📦 PNG містить ВСІ дані для відтворення
-- 🔄 Можеш легко відтворити будь-яке зображення
-- 📝 Історія зберігається назавжди у файлах
+**Your images are self-contained!**
+- 📦 PNG contains ALL data for reproduction
+- 🔄 Can easily reproduce any image
+- 📝 History saved forever in files
 
-**Ніколи не втратиш промпти!** 🎨✨
+**Never lose prompts!** 🎨✨

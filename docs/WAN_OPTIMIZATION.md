@@ -1,76 +1,76 @@
-# Оптимізація WAN 2.2 для RTX 4070 12GB
+# WAN 2.2 Optimization for RTX 4070 12GB
 
-## ⚠️ Проблема: Зависання під час генерації
+## ⚠️ Problem: Hanging During Generation
 
-WAN 2.2 14B — це ДУЖЕ велика модель (14 мільярдів параметрів). Навіть у FP8 вона потребує ~12GB VRAM.
+WAN 2.2 14B is a VERY large model (14 billion parameters). Even in FP8 it requires ~12GB VRAM.
 
 ---
 
-## 🚀 Швидкі виправлення (по черзі):
+## 🚀 Quick Fixes (in order):
 
-### 1. Закрити SwarmUI (звільнити 2-3 GB VRAM)
+### 1. Close SwarmUI (free 2-3 GB VRAM)
 
 ```bash
 docker compose stop swarmui
 ```
 
-**Ефект:** +2-3 GB вільного VRAM
+**Effect:** +2-3 GB free VRAM
 
-### 2. Зменшити кількість кадрів
+### 2. Reduce number of frames
 
-У workflow знайти параметр **num_frames** або **video_frames**:
+In workflow find parameter **num_frames** or **video_frames**:
 
-| Було | Стало | VRAM | Швидкість |
-|------|-------|------|-----------|
-| 25 кадрів | **14 кадрів** | -40% | 2x швидше |
-| 21 кадрів | **14 кадрів** | -30% | 1.5x швидше |
+| Was | Became | VRAM | Speed |
+|-----|--------|------|-------|
+| 25 frames | **14 frames** | -40% | 2x faster |
+| 21 frames | **14 frames** | -30% | 1.5x faster |
 
-**Де змінити:**
-- Нода з параметрами генерації
-- Або нода **EmptyLatentVideo**
-- Встановити: `frames: 14`
+**Where to change:**
+- Node with generation parameters
+- Or node **EmptyLatentVideo**
+- Set: `frames: 14`
 
-### 3. Зменшити роздільність зображення
+### 3. Reduce image resolution
 
-| Було | Стало | VRAM | Якість |
-|------|-------|------|--------|
-| 1024x1024 | **768x768** | -30% | Добре |
-| 1024x576 | **768x432** | -30% | Добре |
-| 768x768 | **512x512** | -50% | Прийнятно |
+| Was | Became | VRAM | Quality |
+|-----|--------|------|---------|
+| 1024x1024 | **768x768** | -30% | Good |
+| 1024x576 | **768x432** | -30% | Good |
+| 768x768 | **512x512** | -50% | Acceptable |
 
-**Як:**
-1. Відкрити вхідне зображення в редакторі
-2. Resize до 768x768
-3. Зберегти і завантажити в ComfyUI
+**How:**
+1. Open input image in editor
+2. Resize to 768x768
+3. Save and upload to ComfyUI
 
-### 4. Використати LightX2V LoRA (4 кроки замість 20)
+### 4. Use LightX2V LoRA (4 steps instead of 20)
 
-У workflow активувати **LoraLoader**:
+In workflow activate **LoraLoader**:
 - **lora_name:** `wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors`
 - **strength_model:** 1.0
 
-У **KSampler**:
-- **steps:** змінити з 20 на **4**
+In **KSampler**:
+- **steps:** change from 20 to **4**
 
-**Ефект:**
-- 5x швидше генерація
+**Effect:**
+- 5x faster generation
 - -20% VRAM
-- Трохи нижча якість, але прийнятно
+- Slightly lower quality, but acceptable
 
-### 5. Використати Low Noise модель (менше шуму = менше кроків)
+### 5. Use Low Noise model (less noise = fewer steps)
 
-Замість `wan2.2_i2v_high_noise` використати:
+Instead of `wan2.2_i2v_high_noise` use:
 ```
 wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
 ```
 
-**Ефект:** Можна зменшити steps до 15-18
+**Effect:** Can reduce steps to 15-18
 
 ---
 
-## 🔧 Оптимальні налаштування для RTX 4070 12GB:
+## 🔧 Optimal settings for RTX 4070 12GB:
 
-### Конфігурація A: Найшвидша (2-3 хвилини)
+### Configuration A: Fastest (2-3 minutes)
 
 ```
 Model: wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
@@ -82,11 +82,11 @@ FPS: 6
 VRAM: ~8-9 GB
 ```
 
-### Конфігурація B: Баланс (5-7 хвилин)
+### Configuration B: Balance (5-7 minutes)
 
 ```
 Model: wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
-LoRA: Вимкнено
+LoRA: Disabled
 Resolution: 768x768
 Frames: 14
 Steps: 18
@@ -94,183 +94,183 @@ FPS: 6
 VRAM: ~10-11 GB
 ```
 
-### Конфігурація C: Найкраща якість (10-15 хвилин)
+### Configuration C: Best quality (10-15 minutes)
 
 ```
 Model: wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
-LoRA: Вимкнено
+LoRA: Disabled
 Resolution: 1024x768
 Frames: 21
 Steps: 20
 FPS: 8
-VRAM: ~12 GB (максимум!)
+VRAM: ~12 GB (maximum!)
 ```
 
 ---
 
-## 📝 Покрокова оптимізація workflow:
+## 📝 Step-by-step workflow optimization:
 
-### Крок 1: Відкрити workflow у ComfyUI
+### Step 1: Open workflow in ComfyUI
 
 http://127.0.0.1:7821
 
-### Крок 2: Знайти критичні ноди
+### Step 2: Find critical nodes
 
-**Нода 1: DiffusionModelLoader / UNETLoader**
-- Змінити на: `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
+**Node 1: DiffusionModelLoader / UNETLoader**
+- Change to: `wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
 
-**Нода 2: LoraLoader (якщо є)**
-- Активувати (mode: 0)
+**Node 2: LoraLoader (if exists)**
+- Activate (mode: 0)
 - lora_name: `wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors`
 - strength_model: 1.0
 - strength_clip: 1.0
 
-**Нода 3: EmptyLatentVideo / параметри відео**
+**Node 3: EmptyLatentVideo / video parameters**
 - width: 768
 - height: 768
-- length: 14 (кількість кадрів)
+- length: 14 (number of frames)
 - batch_size: 1
 
-**Нода 4: KSampler**
-- steps: 4 (якщо LoRA) або 18 (без LoRA)
+**Node 4: KSampler**
+- steps: 4 (if LoRA) or 18 (without LoRA)
 - cfg: 2.5
 - sampler_name: euler
 - scheduler: normal
 
-**Нода 5: LoadImage**
-- Завантажити зображення 768x768
+**Node 5: LoadImage**
+- Upload image 768x768
 
-### Крок 3: Queue Prompt
+### Step 3: Queue Prompt
 
-Генерація має зайняти 2-5 хвилин замість 10-15.
+Generation should take 2-5 minutes instead of 10-15.
 
 ---
 
-## 🔍 Як зрозуміти що зависло vs генерується?
+## 🔍 How to understand if it hung vs generating?
 
-### Генерується (все OK):
+### Generating (all OK):
 ```bash
-# Перевірити GPU
+# Check GPU
 nvidia-smi
 
-# Має показувати:
+# Should show:
 # - GPU Utilization: 90-100%
 # - Memory Used: 10-12 GB
 # - Temperature: 60-80°C
 ```
 
-### Зависло (проблема):
+### Hung (problem):
 ```bash
 nvidia-smi
 
-# Показує:
+# Shows:
 # - GPU Utilization: 0%
 # - Memory Used: 12282 MB (100%)
-# - Або помилка "CUDA out of memory"
+# - Or error "CUDA out of memory"
 ```
 
-### Перевірити логи ComfyUI:
+### Check ComfyUI logs:
 ```bash
 tail -50 /tmp/comfyui.log
 ```
 
-Шукати:
-- `CUDA out of memory` → Зменшити параметри
-- `Killed` → RAM закінчився
-- Progress bar `15%...30%...` → Генерується (чекати)
+Search for:
+- `CUDA out of memory` → Reduce parameters
+- `Killed` → RAM ran out
+- Progress bar `15%...30%...` → Generating (wait)
 
 ---
 
-## 🆘 Екстрена допомога:
+## 🆘 Emergency help:
 
-### Якщо зависло зараз:
+### If it hung now:
 
-**1. Перервати генерацію:**
-- У ComfyUI натиснути **Interrupt** (червона кнопка)
-- Або:
+**1. Interrupt generation:**
+- In ComfyUI press **Interrupt** (red button)
+- Or:
 ```bash
 pkill -f "python.*main.py.*comfy"
 sleep 3
 ./start.sh
 ```
 
-**2. Звільнити VRAM:**
+**2. Free VRAM:**
 ```bash
-# Закрити SwarmUI
+# Close SwarmUI
 docker compose stop swarmui
 
-# Перезапустити ComfyUI
+# Restart ComfyUI
 pkill -f comfy && sleep 3 && ./start.sh
 ```
 
-**3. Перевірити чи ComfyUI живий:**
+**3. Check if ComfyUI is alive:**
 ```bash
 curl http://127.0.0.1:7821/system_stats
 ```
 
-### Альтернатива: Використати SVD (легша модель)
+### Alternative: Use SVD (lighter model)
 
-Якщо WAN занадто важкий, спробуйте SVD:
+If WAN is too heavy, try SVD:
 
 ```
-Model: svd.safetensors (9 GB замість 14 GB)
+Model: svd.safetensors (9 GB instead of 14 GB)
 Resolution: 1024x576
 Frames: 14
 Steps: 20
 VRAM: ~10 GB
-Час: 3-5 хвилин
+Time: 3-5 minutes
 ```
 
-SVD не потребує text encoder, простіша, швидша.
+SVD doesn't require text encoder, simpler, faster.
 
 ---
 
-## 📊 Порівняння ресурсів:
+## 📊 Resource comparison:
 
-| Модель | VRAM | Час (14 кадрів) | Якість |
-|--------|------|-----------------|--------|
-| **SVD** | ~10 GB | 3-5 хв | ⭐⭐⭐ |
-| **WAN + LightX2V** | ~9 GB | 2-3 хв | ⭐⭐⭐⭐ |
-| **WAN Low Noise** | ~11 GB | 5-7 хв | ⭐⭐⭐⭐⭐ |
-| **WAN High Noise** | ~12 GB | 7-10 хв | ⭐⭐⭐⭐⭐ |
+| Model | VRAM | Time (14 frames) | Quality |
+|-------|------|-----------------|---------|
+| **SVD** | ~10 GB | 3-5 min | ⭐⭐⭐ |
+| **WAN + LightX2V** | ~9 GB | 2-3 min | ⭐⭐⭐⭐ |
+| **WAN Low Noise** | ~11 GB | 5-7 min | ⭐⭐⭐⭐⭐ |
+| **WAN High Noise** | ~12 GB | 7-10 min | ⭐⭐⭐⭐⭐ |
 
 ---
 
-## ✅ Рекомендований workflow для RTX 4070:
+## ✅ Recommended workflow for RTX 4070:
 
-1. **Закрити SwarmUI:**
+1. **Close SwarmUI:**
    ```bash
    docker compose stop swarmui
    ```
 
-2. **Використати конфігурацію A (найшвидша):**
+2. **Use Configuration A (fastest):**
    - Model: low_noise
    - LoRA: lightx2v_4steps
    - Resolution: 768x768
    - Frames: 14
    - Steps: 4
 
-3. **Після генерації — запустити SwarmUI назад:**
+3. **After generation — restart SwarmUI:**
    ```bash
    docker compose start swarmui
    ```
 
 ---
 
-## 🎯 Якщо нічого не допомагає:
+## 🎯 If nothing helps:
 
-### План Б: Використати менші параметри
+### Plan B: Use smaller parameters
 
 ```
-Model: wan2.2_i2v_low_noise (ТАК ЖЕ)
-LoRA: lightx2v_4steps (УВІМКНУТИ)
-Resolution: 512x512 (МЕНШЕ!)
-Frames: 10 (МЕНШЕ!)
-Steps: 4 (МЕНШЕ!)
+Model: wan2.2_i2v_low_noise (SAME)
+LoRA: lightx2v_4steps (ENABLE)
+Resolution: 512x512 (SMALLER!)
+Frames: 10 (SMALLER!)
+Steps: 4 (SMALLER!)
 ```
 
-Це має працювати навіть на 8GB VRAM.
+This should work even on 8GB VRAM.
 
 ---
 
-**Спробуйте Конфігурацію A — вона має працювати гарантовано!** 🚀
+**Try Configuration A — it should work guaranteed!** 🚀

@@ -1,21 +1,21 @@
-# Простий Image-to-Video Workflow (БЕЗ CLIPLoader)
+# Simple Image-to-Video Workflow (WITHOUT CLIPLoader)
 
-## ❌ ВИ РОБИТЕ НЕПРАВИЛЬНО:
+## ❌ YOU'RE DOING IT WRONG:
 
-Якщо ваш workflow виглядає так:
+If your workflow looks like this:
 ```
 CLIPLoader → ...
 ```
 
-**ЦЕ НЕПРАВИЛЬНО!** Видаліть всі CLIPLoader ноди!
+**THIS IS WRONG!** Delete all CLIPLoader nodes!
 
 ---
 
-## ✅ ПРАВИЛЬНИЙ WORKFLOW (мінімальний):
+## ✅ CORRECT WORKFLOW (minimal):
 
-### Спосіб 1: Без VHS (найпростіший)
+### Method 1: Without VHS (simplest)
 
-Створіть ці ноди вручну в ComfyUI:
+Create these nodes manually in ComfyUI:
 
 ```
 1. Load Image
@@ -55,37 +55,37 @@ CLIPLoader → ...
    - filename_prefix: video_frames_
 ```
 
-**Результат:** 14 окремих кадрів збережені в `output/`
+**Result:** 14 individual frames saved in `output/`
 
 ---
 
-## 📋 Покрокова інструкція:
+## 📋 Step-by-step instructions:
 
-### Крок 1: Очистити ComfyUI
+### Step 1: Clear ComfyUI
 
-1. Відкрити http://127.0.0.1:7821
-2. Натиснути **Clear** (очистити весь workflow)
-3. Переконатись що **НЕМАЄ** нод CLIPLoader або CLIPTextEncode
+1. Open http://127.0.0.1:7821
+2. Press **Clear** (clear entire workflow)
+3. Make sure there are NO CLIPLoader or CLIPTextEncode nodes
 
-### Крок 2: Додати ноди
+### Step 2: Add nodes
 
-#### Нода 1: LoadImage
-- Права кнопка миші → **Add Node** → **image** → **LoadImage**
-- Завантажити ваше зображення
+#### Node 1: LoadImage
+- Right click → **Add Node** → **image** → **LoadImage**
+- Upload your image
 
-#### Нода 2: ImageOnlyCheckpointLoader
-- Права кнопка миші → **Add Node** → **loaders** → **ImageOnlyCheckpointLoader**
-- У полі **ckpt_name** натиснути **Browse**
-- Знайти: `/mnt/g/Git/GitHub/ai-platform/video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
-- Якщо не знаходить - ввести повний шлях вручну
+#### Node 2: ImageOnlyCheckpointLoader
+- Right click → **Add Node** → **loaders** → **ImageOnlyCheckpointLoader**
+- In **ckpt_name** field click **Browse**
+- Find: `/mnt/g/Git/GitHub/ai-platform/video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
+- If not found - enter full path manually
 
-#### Нода 3: SVD_img2vid_Conditioning
-- Права кнопка миші → **Add Node** → **conditioning** → **video_models** → **SVD_img2vid_Conditioning**
-- Підключити:
-  - `clip_vision` від ImageOnlyCheckpointLoader
-  - `init_image` від LoadImage
-  - `vae` від ImageOnlyCheckpointLoader
-- Налаштувати параметри:
+#### Node 3: SVD_img2vid_Conditioning
+- Right click → **Add Node** → **conditioning** → **video_models** → **SVD_img2vid_Conditioning**
+- Connect:
+  - `clip_vision` from ImageOnlyCheckpointLoader
+  - `init_image` from LoadImage
+  - `vae` from ImageOnlyCheckpointLoader
+- Configure parameters:
   ```
   width: 1024
   height: 576
@@ -95,14 +95,14 @@ CLIPLoader → ...
   augmentation_level: 0
   ```
 
-#### Нода 4: KSampler
-- Права кнопка миші → **Add Node** → **sampling** → **KSampler**
-- Підключити:
-  - `model` від ImageOnlyCheckpointLoader
-  - `positive` від SVD_img2vid_Conditioning
-  - `negative` від SVD_img2vid_Conditioning
-  - `latent_image` від SVD_img2vid_Conditioning
-- Налаштувати:
+#### Node 4: KSampler
+- Right click → **Add Node** → **sampling** → **KSampler**
+- Connect:
+  - `model` from ImageOnlyCheckpointLoader
+  - `positive` from SVD_img2vid_Conditioning
+  - `negative` from SVD_img2vid_Conditioning
+  - `latent_image` from SVD_img2vid_Conditioning
+- Configure:
   ```
   seed: random
   steps: 20
@@ -112,25 +112,25 @@ CLIPLoader → ...
   denoise: 1.0
   ```
 
-#### Нода 5: VAEDecode
-- Права кнопка миші → **Add Node** → **latent** → **VAEDecode**
-- Підключити:
-  - `samples` від KSampler
-  - `vae` від ImageOnlyCheckpointLoader
+#### Node 5: VAEDecode
+- Right click → **Add Node** → **latent** → **VAEDecode**
+- Connect:
+  - `samples` from KSampler
+  - `vae` from ImageOnlyCheckpointLoader
 
-#### Нода 6: SaveImage
-- Права кнопка миші → **Add Node** → **image** → **SaveImage**
-- Підключити:
-  - `images` від VAEDecode
+#### Node 6: SaveImage
+- Right click → **Add Node** → **image** → **SaveImage**
+- Connect:
+  - `images` from VAEDecode
 - filename_prefix: `video_frames_`
 
-### Крок 3: Запустити
+### Step 3: Run
 
-1. Натиснути **Queue Prompt**
-2. Чекати 2-5 хвилин
-3. Кадри з'являться в `output/`
+1. Press **Queue Prompt**
+2. Wait 2-5 minutes
+3. Frames appear in `output/`
 
-### Крок 4: Зібрати відео (вручну)
+### Step 4: Assemble video (manually)
 
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform/output
@@ -139,50 +139,50 @@ ffmpeg -framerate 6 -pattern_type glob -i 'video_frames_*.png' -c:v libx264 -pix
 
 ---
 
-## ⚠️ ВАЖЛИВО:
+## ⚠️ IMPORTANT:
 
-### ❌ НЕ використовуйте:
+### ❌ DON'T use:
 - CLIPLoader
 - CLIPTextEncode
-- CheckpointLoaderSimple (використовуйте ImageOnlyCheckpointLoader)
-- Текстові промпти (image-to-video їх не підтримує)
+- CheckpointLoaderSimple (use ImageOnlyCheckpointLoader)
+- Text prompts (image-to-video doesn't support them)
 
-### ✅ Використовуйте тільки:
-- ImageOnlyCheckpointLoader (для WAN моделей)
-- SVD_img2vid_Conditioning (для параметрів відео)
-- Без CLIP!
+### ✅ ONLY use:
+- ImageOnlyCheckpointLoader (for WAN models)
+- SVD_img2vid_Conditioning (for video parameters)
+- NO CLIP!
 
 ---
 
-## 🎯 Доступні моделі:
+## 🎯 Available models:
 
 ```
 /mnt/g/Git/GitHub/ai-platform/video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
 /mnt/g/Git/GitHub/ai-platform/video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
 ```
 
-**WAN High Noise:** Більше динаміки, активні рухи
-**WAN Low Noise:** Плавніші рухи, вища якість
+**WAN High Noise:** More dynamics, active motion
+**WAN Low Noise:** Smoother motion, higher quality
 
 ---
 
-## 📊 Параметри:
+## 📊 Parameters:
 
 ### motion_bucket_id:
-- 50-100: Легкі рухи
-- 100-150: Помірні рухи
-- 150-200: Активні рухи
+- 50-100: Light motion
+- 100-150: Moderate motion
+- 150-200: Active motion
 
 ### video_frames:
-- 14: ~2 секунди, швидше
-- 21: ~3 секунди
-- 25: ~4 секунди, повільніше
+- 14: ~2 seconds, faster
+- 21: ~3 seconds
+- 25: ~4 seconds, slower
 
 ### fps:
-- 6: Повільна анімація
-- 8: Стандартна
-- 12: Швидка
+- 6: Slow animation
+- 8: Standard
+- 12: Fast
 
 ---
 
-**Після цього workflow точно має працювати!** 🎬
+**After this the workflow should definitely work!** 🎬

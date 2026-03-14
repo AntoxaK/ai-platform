@@ -171,265 +171,265 @@ curl http://127.0.0.1:11434/api/generate -d '{"model":"qwen2.5-coder:7b","keep_a
 
 | Architecture | Quality | Speed | VRAM (12GB) | Notes |
 |--------------|---------|-------|-------------|-------|
-| **SD 1.5** | ★★★☆☆ | Fast | ~4 GB ✓ | Найбільше моделей, легкий |
-| **SD 2.x** | ★★★☆☆ | Fast | ~5 GB ✓ | Менш популярний |
-| **SDXL** | ★★★★☆ | Medium | ~6-8 GB ✓ | **Рекомендовано** — баланс якості/швидкості |
-| **SDXL Turbo/Lightning** | ★★★★☆ | Very Fast | ~6 GB ✓ | 1-4 кроки, швидка генерація |
-| **Pony Diffusion** | ★★★★☆ | Medium | ~6-8 GB ✓ | Стилізовані, аніме |
-| **Flux Schnell** | ★★★★★ | Fast | ~10 GB ✓ | Висока якість, швидкий |
-| **Flux Dev** | ★★★★★ | Slow | ~12 GB ⚠ | Найвища якість, потребує FP8 |
-| **SD 3 / SD 3.5** | ★★★★★ | Slow | ~12+ GB ⚠ | Нова архітектура, важкий |
-| **PixArt-α/Σ** | ★★★★☆ | Medium | ~8-10 GB ✓ | Альтернатива SDXL |
-| **Kolors** | ★★★★☆ | Medium | ~8 GB ✓ | Китайська модель |
-| **AuraFlow** | ★★★★☆ | Medium | ~8 GB ✓ | Відкрита альтернатива Flux |
+| **SD 1.5** | ★★★☆☆ | Fast | ~4 GB ✓ | Most models available, lightweight |
+| **SD 2.x** | ★★★☆☆ | Fast | ~5 GB ✓ | Less popular |
+| **SDXL** | ★★★★☆ | Medium | ~6-8 GB ✓ | **Recommended** — best quality/speed balance |
+| **SDXL Turbo/Lightning** | ★★★★☆ | Very Fast | ~6 GB ✓ | 1-4 steps, fast generation |
+| **Pony Diffusion** | ★★★★☆ | Medium | ~6-8 GB ✓ | Stylized, anime |
+| **Flux Schnell** | ★★★★★ | Fast | ~10 GB ✓ | High quality, fast |
+| **Flux Dev** | ★★★★★ | Slow | ~12 GB ⚠ | Highest quality, requires FP8 |
+| **SD 3 / SD 3.5** | ★★★★★ | Slow | ~12+ GB ⚠ | New architecture, heavy |
+| **PixArt-α/Σ** | ★★★★☆ | Medium | ~8-10 GB ✓ | SDXL alternative |
+| **Kolors** | ★★★★☆ | Medium | ~8 GB ✓ | Chinese model |
+| **AuraFlow** | ★★★★☆ | Medium | ~8 GB ✓ | Open Flux alternative |
 
 ### Download Sources
 
-| Source | URL | Що шукати |
+| Source | URL | What to Search For |
 |--------|-----|-----------|
-| **Civitai** | https://civitai.com/models | Checkpoint, LoRA — найбільша спільнота |
-| **Hugging Face** | https://huggingface.co/models?pipeline_tag=text-to-image | Офіційні релізи |
+| **Civitai** | https://civitai.com/models | Checkpoints, LoRA — largest community |
+| **Hugging Face** | https://huggingface.co/models?pipeline_tag=text-to-image | Official releases |
 | **OpenModelDB** | https://openmodeldb.info | Upscalers |
 
-### Civitai: Фільтри для пошуку
+### Civitai: Filtering Guide
 
 - **Base Model**: SD 1.5, SDXL 1.0, Pony, Flux.1 D/S, SD 3.5, etc.
 - **Model Type**: Checkpoint, LoRA, VAE, Embedding, ControlNet
-- **Download format**: Завжди `.safetensors` (безпечніше, швидше)
+- **Download format**: Always `.safetensors` (safer, faster)
 
 ### Model Placement
 
-| Тип моделі | Директорія | Civitai фільтр |
-|------------|------------|----------------|
-| **Основні моделі:** | | |
+| Model Type | Directory | Civitai Filter |
+|------------|-----------|----------------|
+| **Base Models:** | | |
 | Base checkpoints | `models/Stable-Diffusion/` | **Model Type:** Checkpoint |
 | LoRA adapters | `models/Lora/` | **Model Type:** LoRA |
 | LyCORIS (LoCon, LoHa) | `models/Lora/` | **Model Type:** LoCon, LoHa |
 | VAE | `models/VAE/` | **Model Type:** VAE |
 | Textual inversions | `models/Embeddings/` | **Model Type:** Embedding, Textual Inversion |
-| **Контроль генерації:** | | |
+| **Generation Control:** | | |
 | ControlNet | `models/ControlNet/` | **Model Type:** ControlNet |
 | T2I-Adapter | `models/ControlNet/` | **Model Type:** Controlnet (T2I) |
 | IP-Adapter | `models/ipadapter/` | **Model Type:** IP-Adapter |
-| **Покращення якості:** | | |
+| **Quality Enhancement:** | | |
 | Upscalers (ESRGAN, etc.) | `models/upscale_models/` | OpenModelDB, Hugging Face |
-| **Спеціалізовані моделі:** | | |
+| **Specialized Models:** | | |
 | AnimateDiff | `models/animatediff_models/` | **Model Type:** Motion Module |
 | AnimateDiff LoRA | `models/animatediff_motion_lora/` | **Model Type:** AnimateDiff |
 | InstantID | `models/instantid/` | **Model Type:** InstantID |
 | PhotoMaker | `models/photomaker/` | **Model Type:** PhotoMaker |
-| **Додаткові компоненти:** | | |
+| **Additional Components:** | | |
 | CLIP models | `models/clip_vision/` | Hugging Face |
 | Text encoders (Flux/SD3) | `models/text_encoders/` | Hugging Face |
-| UNET моделі | `models/unet/` | — |
-| Diffusion моделі | `models/diffusion_models/` | — |
+| UNET models | `models/unet/` | — |
+| Diffusion models | `models/diffusion_models/` | — |
 
-#### Як фільтрувати на Civitai
+#### How to Filter on Civitai
 
-**Крок 1: Виберіть Base Model** (залежно від того, що вам потрібно):
-- `SD 1.5` — для легких, швидких моделей (4GB VRAM)
-- `SDXL 1.0` — **рекомендовано** для балансу якості/швидкості (6-8GB VRAM)
-- `Pony` — для стилізованих/аніме зображень (6-8GB VRAM)
-- `Flux.1 D` або `Flux.1 S` — для найвищої якості (10-12GB VRAM)
-- `SD 3` або `SD 3.5 Large` — нові моделі (12GB+ VRAM)
+**Step 1: Choose Base Model** (depending on your needs):
+- `SD 1.5` — for lightweight, fast models (4GB VRAM)
+- `SDXL 1.0` — **recommended** for quality/speed balance (6-8GB VRAM)
+- `Pony` — for stylized/anime images (6-8GB VRAM)
+- `Flux.1 D` or `Flux.1 S` — for highest quality (10-12GB VRAM)
+- `SD 3` or `SD 3.5 Large` — new models (12GB+ VRAM)
 
-**Крок 2: Виберіть Model Type**:
-- `Checkpoint` — основні моделі (ідуть у `Stable-Diffusion/`)
-- `LoRA` — адаптери для модифікації стилю (ідуть у `Lora/`)
-- `LoCon`, `LoHa` — різновиди LoRA (також у `Lora/`)
-- `VAE` — декодери (ідуть у `VAE/`)
-- `Embedding` — текстові інверсії (ідуть у `Embeddings/`)
-- `ControlNet` — контроль композиції (ідуть у `ControlNet/`)
+**Step 2: Choose Model Type**:
+- `Checkpoint` — base models (go to `Stable-Diffusion/`)
+- `LoRA` — style adapters (go to `Lora/`)
+- `LoCon`, `LoHa` — LoRA variants (also to `Lora/`)
+- `VAE` — decoders (go to `VAE/`)
+- `Embedding` — textual inversions (go to `Embeddings/`)
+- `ControlNet` — composition control (go to `ControlNet/`)
 
-**Крок 3: Формат файлу**:
-- Завжди обирайте `.safetensors` (безпечніше, швидше)
-- Уникайте `.ckpt` та `.pt` (застарілі, менш безпечні)
+**Step 3: File Format**:
+- Always choose `.safetensors` (safer, faster)
+- Avoid `.ckpt` and `.pt` (outdated, less secure)
 
-### Flux моделі — додаткові компоненти
+### Flux Models — Additional Components
 
-Flux потребує окремих файлів (завантажте з HuggingFace):
+Flux requires separate files (download from HuggingFace):
 ```
 models/
 ├── Stable-Diffusion/
-│   └── flux1-schnell.safetensors    # Основна модель
+│   └── flux1-schnell.safetensors    # Base model
 ├── text_encoders/
 │   ├── clip_l.safetensors           # CLIP-L encoder
-│   └── t5xxl_fp8_e4m3fn.safetensors # T5-XXL (fp8 для економії VRAM)
+│   └── t5xxl_fp8_e4m3fn.safetensors # T5-XXL (fp8 for VRAM savings)
 └── VAE/
     └── ae.safetensors               # Flux VAE (autoencoder)
 ```
 
-### Рекомендації для RTX 4070 (12GB)
+### Recommendations for RTX 4070 (12GB)
 
-**✓ Найкращий вибір:**
-- SDXL моделі — оптимальний баланс
-- SDXL Turbo/Lightning — швидка генерація
-- Flux Schnell — найвища якість
+**✓ Best Choices:**
+- SDXL models — optimal balance
+- SDXL Turbo/Lightning — fast generation
+- Flux Schnell — highest quality
 
-**⚠ З обережністю:**
-- Flux Dev — використовуйте FP8 квантизацію
-- SD 3.5 Large — може потребувати offloading
+**⚠ Use with Caution:**
+- Flux Dev — use FP8 quantization
+- SD 3.5 Large — may require offloading
 
-**❌ Не рекомендовано:**
-- SD 2.x — застарілий, менше спільнота
-- Kandinsky — застарілий, складна установка
-- DeepFloyd IF — потребує багато VRAM (20GB+)
+**❌ Not Recommended:**
+- SD 2.x — outdated, less community
+- Kandinsky — outdated, complex setup
+- DeepFloyd IF — requires lots of VRAM (20GB+)
 
-### Детальний довідник архітектур
+### Detailed Architecture Guide
 
 #### SD 1.5 (Stable Diffusion 1.5)
 - **Civitai Base Model**: `SD 1.5`
-- **Розмір**: 2-4 GB (pruned), 7 GB (full)
-- **Роздільна здатність**: 512x512 (можна 768x768 з VAE)
-- **Популярні моделі**: DreamShaper, Realistic Vision, MajicMix
-- **Переваги**: Швидкий, велика бібліотека LoRA/Embeddings
-- **Недоліки**: Нижча якість ніж SDXL/Flux
+- **Size**: 2-4 GB (pruned), 7 GB (full)
+- **Resolution**: 512x512 (up to 768x768 with VAE)
+- **Popular Models**: DreamShaper, Realistic Vision, MajicMix
+- **Advantages**: Fast, large LoRA/Embeddings library
+- **Disadvantages**: Lower quality than SDXL/Flux
 
 #### SDXL (Stable Diffusion XL)
 - **Civitai Base Model**: `SDXL 1.0`
-- **Розмір**: 6-7 GB
-- **Роздільна здатність**: 1024x1024 (native), до 2048x2048
-- **Популярні моделі**: Juggernaut XL, RealVisXL, DreamshaperXL
-- **Переваги**: **Найкращий баланс якості/швидкості**, велика спільнота
-- **Недоліки**: Повільніше за SD 1.5
+- **Size**: 6-7 GB
+- **Resolution**: 1024x1024 (native), up to 2048x2048
+- **Popular Models**: Juggernaut XL, RealVisXL, DreamshaperXL
+- **Advantages**: **Best quality/speed balance**, large community
+- **Disadvantages**: Slower than SD 1.5
 
 #### SDXL Turbo/Lightning
 - **Civitai Base Model**: `SDXL Turbo`, `SDXL Lightning`
-- **Розмір**: 6-7 GB
-- **Роздільна здатність**: 1024x1024
-- **Особливості**: Генерація за 1-4 кроки (замість 20-30)
-- **Популярні моделі**: SDXL Lightning, SDXL Turbo
-- **Переваги**: Дуже швидко (3-5 секунд)
-- **Недоліки**: Менше контролю (низький CFG)
+- **Size**: 6-7 GB
+- **Resolution**: 1024x1024
+- **Features**: Generation in 1-4 steps (instead of 20-30)
+- **Popular Models**: SDXL Lightning, SDXL Turbo
+- **Advantages**: Very fast (3-5 seconds)
+- **Disadvantages**: Less control (low CFG)
 
 #### Pony Diffusion
 - **Civitai Base Model**: `Pony`
-- **Розмір**: 6-7 GB
-- **Роздільна здатність**: 1024x1024
-- **Популярні моделі**: Pony Diffusion V6, Autism Mix
-- **Переваги**: Відмінно для аніме, furry, стилізованих зображень
-- **Недоліки**: Специфічні теги (Danbooru format)
+- **Size**: 6-7 GB
+- **Resolution**: 1024x1024
+- **Popular Models**: Pony Diffusion V6, Autism Mix
+- **Advantages**: Excellent for anime, furry, stylized images
+- **Disadvantages**: Specific tags (Danbooru format)
 
 #### Flux Schnell
 - **Civitai Base Model**: `Flux.1 S`
-- **Розмір**: ~24 GB (модель + text encoders + VAE)
+- **Size**: ~24 GB (model + text encoders + VAE)
   - Main model: ~10 GB
   - CLIP-L: 235 MB
   - T5-XXL (FP8): ~4.6 GB
   - VAE: ~335 MB
-- **Роздільна здатність**: 1024x1024, підтримка будь-яких розмірів
-- **Популярні моделі**: Flux.1 Schnell (офіційна)
-- **Переваги**: **Найвища якість**, 4 кроки, чудове розуміння промптів
-- **Недоліки**: Великий розмір, потребує додаткові файли
+- **Resolution**: 1024x1024, supports any size
+- **Popular Models**: Flux.1 Schnell (official)
+- **Advantages**: **Highest quality**, 4 steps, excellent prompt understanding
+- **Disadvantages**: Large size, requires additional files
 
 #### Flux Dev
 - **Civitai Base Model**: `Flux.1 D`
-- **Розмір**: ~24 GB (аналогічно Schnell)
-- **Роздільна здатність**: 1024x1024, підтримка будь-яких розмірів
-- **Популярні моделі**: Flux.1 Dev (офіційна), Flux Realism LoRA
-- **Переваги**: **Абсолютна найвища якість**, точне відтворення промптів
-- **Недоліки**: Повільний (25+ кроків), 12GB VRAM (використовуйте FP8)
+- **Size**: ~24 GB (similar to Schnell)
+- **Resolution**: 1024x1024, supports any size
+- **Popular Models**: Flux.1 Dev (official), Flux Realism LoRA
+- **Advantages**: **Absolute highest quality**, exact prompt reproduction
+- **Disadvantages**: Slow (25+ steps), 12GB VRAM (use FP8)
 
 #### SD 3 / SD 3.5
 - **Civitai Base Model**: `SD 3`, `SD 3.5 Large`, `SD 3.5 Medium`
-- **Розмір**:
+- **Size**:
   - SD 3.5 Large: ~12 GB
   - SD 3.5 Medium: ~5 GB
-- **Роздільна здатність**: 1024x1024+
-- **Переваги**: Нова архітектура, краще розуміння тексту
-- **Недоліки**: Менше моделей на Civitai, потребує більше VRAM
+- **Resolution**: 1024x1024+
+- **Advantages**: New architecture, better text understanding
+- **Disadvantages**: Fewer models on Civitai, requires more VRAM
 
-#### Інші архітектури
+#### Other Architectures
 
 **PixArt-α / PixArt-Σ**
-- **Розмір**: 8-10 GB
-- **Особливості**: Альтернатива SDXL, менше ресурсів
-- **Доступність**: В основному Hugging Face
+- **Size**: 8-10 GB
+- **Features**: SDXL alternative, fewer resources
+- **Availability**: Mainly Hugging Face
 
 **Kolors**
-- **Розмір**: ~8 GB
-- **Особливості**: Китайська модель, добре працює з ієрогліфами
-- **Доступність**: Hugging Face
+- **Size**: ~8 GB
+- **Features**: Chinese model, works well with hieroglyphics
+- **Availability**: Hugging Face
 
 **AuraFlow**
-- **Розмір**: ~8 GB
-- **Особливості**: Відкрита альтернатива Flux
-- **Доступність**: Hugging Face
+- **Size**: ~8 GB
+- **Features**: Open Flux alternative
+- **Availability**: Hugging Face
 
-### Додаткові типи моделей
+### Additional Model Types
 
 #### LoRA (Low-Rank Adaptation)
-- **Розмір**: 10-200 MB
-- **Застосування**: Зміна стилю, додавання персонажів, покращення деталей
-- **Популярні категорії**:
-  - Style LoRAs (аніме, реалізм, арт стилі)
-  - Character LoRAs (конкретні персонажі)
-  - Concept LoRAs (поза, освітлення, деталі)
-  - NSFW LoRAs (дорослий контент)
-- **Використання**: Weight 0.5-1.0 (експериментуйте)
+- **Size**: 10-200 MB
+- **Use**: Style changes, add characters, enhance details
+- **Popular Categories**:
+  - Style LoRAs (anime, realism, art styles)
+  - Character LoRAs (specific characters)
+  - Concept LoRAs (poses, lighting, details)
+  - NSFW LoRAs (adult content)
+- **Usage**: Weight 0.5-1.0 (experiment)
 
 #### VAE (Variational Autoencoder)
-- **Розмір**: 300-800 MB
-- **Застосування**: Покращує якість кольорів, різкість
-- **Популярні моделі**:
-  - `sdxl_vae.safetensors` — для всіх SDXL моделей
-  - `vae-ft-mse-840000-ema-pruned.safetensors` — для SD 1.5
-  - `ae.safetensors` — для Flux
-- **Примітка**: Багато моделей мають вбудований VAE (baked-in)
+- **Size**: 300-800 MB
+- **Use**: Improve color quality, sharpness
+- **Popular Models**:
+  - `sdxl_vae.safetensors` — for all SDXL models
+  - `vae-ft-mse-840000-ema-pruned.safetensors` — for SD 1.5
+  - `ae.safetensors` — for Flux
+- **Note**: Many models have built-in VAE (baked-in)
 
 #### ControlNet
-- **Розмір**: 1-3 GB
-- **Застосування**: Контроль композиції через:
-  - Canny (контури)
-  - Depth (глибина)
-  - OpenPose (скелет людини)
-  - Scribble (малюнки)
-  - Normal map (освітлення)
-- **Доступність**: Civitai, Hugging Face
-- **Примітка**: Потрібна окрема модель для кожного типу контролю
+- **Size**: 1-3 GB
+- **Use**: Control composition via:
+  - Canny (contours)
+  - Depth (depth map)
+  - OpenPose (human skeleton)
+  - Scribble (drawings)
+  - Normal map (lighting)
+- **Availability**: Civitai, Hugging Face
+- **Note**: Separate model needed for each control type
 
 #### Embeddings / Textual Inversions
-- **Розмір**: 10-100 KB
-- **Застосування**: Додавання концептів через ключові слова
-- **Популярні**: EasyNegative, BadDream, FastNegative (негативні промпти)
-- **Використання**: Просто вкажіть назву у промпті
+- **Size**: 10-100 KB
+- **Use**: Add concepts via keywords
+- **Popular**: EasyNegative, BadDream, FastNegative (negative prompts)
+- **Usage**: Just specify the name in your prompt
 
 #### IP-Adapter
-- **Розмір**: 200 MB - 2 GB
-- **Застосування**: Перенесення стилю з референсного зображення
-- **Потрібно**: CLIP Vision model (автоматично завантажується)
+- **Size**: 200 MB - 2 GB
+- **Use**: Transfer style from reference image
+- **Required**: CLIP Vision model (auto-loaded)
 
 #### AnimateDiff
-- **Розмір**: 1-2 GB (motion module) + 100-300 MB (LoRA)
-- **Застосування**: Генерація анімацій/відео
-- **Примітка**: Потребує спеціальні workflow у ComfyUI
+- **Size**: 1-2 GB (motion module) + 100-300 MB (LoRA)
+- **Use**: Generate animations/videos
+- **Note**: Requires special workflows in ComfyUI
 
 ### After Adding Models
 
-**Крок 1: Покласти файл у правильну папку**
+**Step 1: Place file in correct folder**
 ```
-models/Stable-Diffusion/  ← для checkpoints (.safetensors)
-models/Lora/              ← для LoRA
-models/VAE/               ← для VAE
+models/Stable-Diffusion/  ← for checkpoints (.safetensors)
+models/Lora/              ← for LoRA
+models/VAE/               ← for VAE
 ```
 
-**Крок 2: Оновити список моделей**
+**Step 2: Update model list**
 
-Варіант A — через веб-інтерфейс (рекомендовано):
-1. Відкрити http://127.0.0.1:7801
-2. Внизу зліва: **Server** → **Utilities** → **Refresh Models**
+Option A — via web interface (recommended):
+1. Open http://127.0.0.1:7801
+2. Bottom left: **Server** → **Utilities** → **Refresh Models**
 
-Варіант B — через термінал:
+Option B — via terminal:
 ```bash
 docker compose restart swarmui
 ```
 
-**Крок 3: Вибрати модель**
-1. У SwarmUI натиснути на поле **Model** (зверху)
-2. Знайти нову модель у списку
-3. Клікнути для вибору
+**Step 3: Select model**
+1. In SwarmUI click **Model** field (top)
+2. Find new model in list
+3. Click to select
 
-**Примітка:** ComfyUI перезапускати НЕ потрібно — він автоматично бачить нові файли у папках моделей.
+**Note:** ComfyUI does NOT need to restart — it auto-detects new files in model folders.
 
 ## Model Organization
 
@@ -453,7 +453,7 @@ models/
 - **Stable-Diffusion/** contains only text-to-image checkpoints (8 models)
 - **diffusion_models/** contains SVD for video generation (1 model, 9GB)
 - SVD does NOT appear in SwarmUI model list (use via ComfyUI workflows)
-- See `VIDEO_GENERATION.md` for SVD usage instructions
+- See `docs/VIDEO_GENERATION.md` for SVD usage instructions
 
 ## Ports
 

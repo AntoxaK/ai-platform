@@ -1,40 +1,40 @@
-# ComfyUI Image-to-Video — Швидкий старт
+# ComfyUI Image-to-Video — Quick Start
 
-## ❌ Проблема: CLIPLoader помилка
+## ❌ Problem: CLIPLoader error
 
-Якщо ви бачите помилку:
+If you see error:
 ```
 CLIPLoader
 Internal: src/sentencepiece_processor.cc(237) [model_proto->ParseFromArray...]
 ```
 
-**Причина:** Ви використовуєте **text-to-image** workflow замість **image-to-video** workflow.
+**Reason:** You're using **text-to-image** workflow instead of **image-to-video** workflow.
 
-**Рішення:** Image-to-video моделі (SVD, WAN) **НЕ використовують CLIP** — їм не потрібні текстові промпти!
+**Solution:** Image-to-video models (SVD, WAN) **DO NOT USE CLIP** — they don't need text prompts!
 
 ---
 
-## ✅ Правильний спосіб використання I2V моделей
+## ✅ Correct way to use I2V models
 
-### Крок 1: Відкрити ComfyUI
+### Step 1: Open ComfyUI
 ```
 http://127.0.0.1:7821
 ```
 
-### Крок 2: Завантажити готовий workflow
+### Step 2: Load ready workflow
 
-#### Опція A: Використати мій workflow (рекомендовано)
+#### Option A: Use my workflow (recommended)
 
-1. У ComfyUI натиснути **"Load"** (внизу справа)
-2. Клікнути **"Upload"** або перетягнути файл:
+1. In ComfyUI press **"Load"** (bottom right)
+2. Click **"Upload"** or drag file:
    ```
    /mnt/g/Git/GitHub/ai-platform/video_workflow_basic.json
    ```
-3. Workflow завантажиться автоматично
+3. Workflow will load automatically
 
-#### Опція B: Створити вручну
+#### Option B: Create manually
 
-Якщо файл не працює, створіть workflow з наступних нод:
+If file doesn't work, create workflow from these nodes:
 
 ```
 1. LoadImage
@@ -50,24 +50,24 @@ http://127.0.0.1:7821
 6. VHS_VideoCombine (Save Video)
 ```
 
-### Крок 3: Налаштувати параметри
+### Step 3: Configure parameters
 
-#### У ноді "ImageOnlyCheckpointLoader":
+#### In "ImageOnlyCheckpointLoader" node:
 
-Вибрати модель:
+Choose model:
 - **SVD:** `video_models/svd.safetensors`
 - **WAN High:** `video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
 - **WAN Low:** `video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
 
-#### У ноді "LoadImage":
+#### In "LoadImage" node:
 
-1. Клікнути **"Choose File"**
-2. Вибрати зображення (1024x576 рекомендовано)
-3. Формат: PNG, JPG
+1. Click **"Choose File"**
+2. Select image (1024x576 recommended)
+3. Format: PNG, JPG
 
-#### У ноді "SVD_img2vid_Conditioning":
+#### In "SVD_img2vid_Conditioning" node:
 
-**Для SVD або швидкого тесту:**
+**For SVD or quick test:**
 ```
 width: 1024
 height: 576
@@ -77,7 +77,7 @@ fps: 6
 augmentation_level: 0
 ```
 
-**Для WAN High Noise (динамічні рухи):**
+**For WAN High Noise (dynamic motion):**
 ```
 width: 1024
 height: 576
@@ -87,7 +87,7 @@ fps: 8
 augmentation_level: 0
 ```
 
-**Для WAN Low Noise (плавні рухи):**
+**For WAN Low Noise (smooth motion):**
 ```
 width: 1024
 height: 576
@@ -97,10 +97,10 @@ fps: 6
 augmentation_level: 0
 ```
 
-#### У ноді "KSampler":
+#### In "KSampler" node:
 
 ```
-seed: (будь-яке число або "randomize")
+seed: (any number or "randomize")
 steps: 20
 cfg: 2.5
 sampler_name: euler
@@ -108,109 +108,109 @@ scheduler: karras
 denoise: 1.0
 ```
 
-#### У ноді "VHS_VideoCombine":
+#### In "VHS_VideoCombine" node:
 
 ```
-frame_rate: 6 (або 8)
+frame_rate: 6 (or 8)
 format: h264-mp4
 filename_prefix: video_output
 ```
 
-### Крок 4: Запустити генерацію
+### Step 4: Run generation
 
-1. Натиснути **"Queue Prompt"** (праворуч вгорі)
-2. Чекати 2-10 хвилин (залежно від моделі)
-3. Відео збережеться в: `output/`
-
----
-
-## 🎯 Параметри детально
-
-### motion_bucket_id (Кількість руху)
-
-| Значення | Ефект | Використання |
-|----------|-------|--------------|
-| **0-50** | Майже статичне | Дуже легкі рухи (дихання, моргання) |
-| **50-100** | Легкий рух | Вітер, хмари, легкі жести |
-| **100-150** | Помірний рух | Ходьба, звичайні рухи |
-| **150-200** | Активний рух | Біг, танці, активні дії |
-| **200-255** | Дуже динамічно | Швидкі рухи, спорт |
-
-### video_frames (Кількість кадрів)
-
-| Значення | Тривалість @ 6fps | Тривалість @ 8fps | VRAM | Час генерації |
-|----------|-------------------|-------------------|------|---------------|
-| **14** | ~2.3 сек | ~1.75 сек | ~10 GB | 2-5 хв |
-| **21** | ~3.5 сек | ~2.6 сек | ~11 GB | 4-7 хв |
-| **25** | ~4.2 сек | ~3.1 сек | ~12 GB | 5-10 хв |
-
-### fps (Кадрів на секунду)
-
-| Значення | Ефект |
-|----------|-------|
-| **6** | Повільна, плавна анімація |
-| **8** | Стандартна швидкість |
-| **12** | Швидка, динамічна анімація |
-
-### augmentation_level (Рівень аугментації)
-
-| Значення | Ефект |
-|----------|-------|
-| **0.0** | Без змін (рекомендовано) |
-| **0.1-0.3** | Легкі варіації |
-| **0.5+** | Сильні зміни (може бути хаотично) |
+1. Press **"Queue Prompt"** (top right)
+2. Wait 2-10 minutes (depends on model)
+3. Video saves to: `output/`
 
 ---
 
-## 📋 Типові помилки та рішення
+## 🎯 Parameters in detail
 
-### Помилка 1: CLIPLoader sentencepiece error
+### motion_bucket_id (Motion amount)
 
-**Причина:** Використовується text-to-image workflow
+| Value | Effect | Use |
+|-------|--------|-----|
+| **0-50** | Almost static | Very light motion (breathing, blinking) |
+| **50-100** | Light motion | Wind, clouds, light gestures |
+| **100-150** | Moderate motion | Walking, normal movements |
+| **150-200** | Active motion | Running, dancing, active actions |
+| **200-255** | Very dynamic | Fast movement, sports |
 
-**Рішення:** Видалити всі ноди **CLIPLoader** та **CLIPTextEncode** з workflow. I2V моделі їх не потребують!
+### video_frames (Frame count)
 
-### Помилка 2: Model not found
+| Value | Duration @ 6fps | Duration @ 8fps | VRAM | Generation time |
+|-------|-----------------|-----------------|------|-----------------|
+| **14** | ~2.3 sec | ~1.75 sec | ~10 GB | 2-5 min |
+| **21** | ~3.5 sec | ~2.6 sec | ~11 GB | 4-7 min |
+| **25** | ~4.2 sec | ~3.1 sec | ~12 GB | 5-10 min |
 
-**Причина:** Неправильний шлях до моделі
+### fps (Frames per second)
 
-**Рішення:** У ноді "ImageOnlyCheckpointLoader" вкажіть:
+| Value | Effect |
+|-------|--------|
+| **6** | Slow, smooth animation |
+| **8** | Standard speed |
+| **12** | Fast, dynamic animation |
+
+### augmentation_level (Augmentation level)
+
+| Value | Effect |
+|-------|--------|
+| **0.0** | No changes (recommended) |
+| **0.1-0.3** | Light variations |
+| **0.5+** | Strong changes (can be chaotic) |
+
+---
+
+## 📋 Common errors and solutions
+
+### Error 1: CLIPLoader sentencepiece error
+
+**Reason:** Using text-to-image workflow
+
+**Solution:** Delete all **CLIPLoader** and **CLIPTextEncode** nodes from workflow. I2V models don't need them!
+
+### Error 2: Model not found
+
+**Reason:** Wrong path to model
+
+**Solution:** In "ImageOnlyCheckpointLoader" node specify:
 ```
 video_models/svd.safetensors
 video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors
 video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors
 ```
 
-### Помилка 3: Out of memory (CUDA)
+### Error 3: Out of memory (CUDA)
 
-**Причина:** VRAM переповнений
+**Reason:** VRAM full
 
-**Рішення:**
-1. Зменшити `video_frames` до 14
-2. Зменшити роздільність (768x576 замість 1024x576)
-3. Закрити SwarmUI під час генерації відео
-4. Використати SVD замість WAN (менше VRAM)
+**Solution:**
+1. Reduce `video_frames` to 14
+2. Reduce resolution (768x576 instead of 1024x576)
+3. Close SwarmUI during video generation
+4. Use SVD instead of WAN (less VRAM)
 
-### Помилка 4: VHS_VideoCombine not found
+### Error 4: VHS_VideoCombine not found
 
-**Причина:** Custom nodes не встановлені
+**Reason:** Custom nodes not installed
 
-**Рішення:**
+**Solution:**
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform/dlbackend/ComfyUI/custom_nodes
 git clone https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
-# Перезапустити ComfyUI
+# Restart ComfyUI
 ```
 
 ---
 
-## 🎨 Приклади використання
+## 🎨 Usage examples
 
-### Приклад 1: Портрет з легким рухом (SVD)
+### Example 1: Portrait with light motion (SVD)
 
-**Модель:** `video_models/svd.safetensors`
+**Model:** `video_models/svd.safetensors`
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -219,13 +219,13 @@ motion_bucket_id: 80
 fps: 6
 ```
 
-**Результат:** Моргання, легкий рух волосся, дихання
+**Result:** Blinking, light hair movement, breathing
 
-### Приклад 2: Пейзаж з рухом хмар (WAN Low)
+### Example 2: Landscape with cloud motion (WAN Low)
 
-**Модель:** `video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
+**Model:** `video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -234,13 +234,13 @@ motion_bucket_id: 100
 fps: 6
 ```
 
-**Результат:** Плавний рух хмар, легке коливання дерев
+**Result:** Smooth cloud motion, light tree sway
 
-### Приклад 3: Людина що йде (WAN High)
+### Example 3: Walking person (WAN High)
 
-**Модель:** `video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
+**Model:** `video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -249,47 +249,47 @@ motion_bucket_id: 180
 fps: 8
 ```
 
-**Результат:** Активна ходьба, рух одягу, природна анімація
+**Result:** Active walking, cloth movement, natural animation
 
 ---
 
-## 🔧 Швидкі команди
+## 🔧 Quick commands
 
 ```bash
-# Перевірити чи ComfyUI запущений
+# Check if ComfyUI is running
 curl -s http://127.0.0.1:7821/system_stats
 
-# Переглянути доступні відео моделі
+# View available video models
 ls -lh /mnt/g/Git/GitHub/ai-platform/video_models/
 
-# Переглянути згенеровані відео
+# View generated videos
 ls -lht /mnt/g/Git/GitHub/ai-platform/output/ | head -10
 
-# Відкрити папку output
+# Open output folder
 cd /mnt/g/Git/GitHub/ai-platform/output
 ```
 
 ---
 
-## ✅ Контрольний список
+## ✅ Checklist
 
-Перед генерацією переконайтесь:
+Before generation check:
 
-- [ ] Використовуєте **ImageOnlyCheckpointLoader** (НЕ CheckpointLoaderSimple)
-- [ ] У workflow **НЕМАЄ** нод CLIPLoader або CLIPTextEncode
-- [ ] Вибрана правильна модель (`video_models/...`)
-- [ ] Завантажене вхідне зображення (1024x576)
-- [ ] Налаштовані параметри (motion_bucket_id, fps, video_frames)
-- [ ] ComfyUI запущений (http://127.0.0.1:7821)
-- [ ] Є вільний VRAM (~10-12 GB)
+- [ ] Using **ImageOnlyCheckpointLoader** (NOT CheckpointLoaderSimple)
+- [ ] Workflow has **NO** CLIPLoader or CLIPTextEncode nodes
+- [ ] Correct model selected (`video_models/...`)
+- [ ] Input image uploaded (1024x576)
+- [ ] Parameters configured (motion_bucket_id, fps, video_frames)
+- [ ] ComfyUI running (http://127.0.0.1:7821)
+- [ ] Free VRAM available (~10-12 GB)
 
 ---
 
-**Готово! Тепер ви можете генерувати відео з будь-якої з трьох моделей!** 🎬✨
+**Ready! Now you can generate videos from any of the three models!** 🎬✨
 
-**Швидкий старт:**
-1. Відкрити ComfyUI: http://127.0.0.1:7821
-2. Завантажити workflow: `video_workflow_basic.json`
-3. Вибрати модель: `video_models/svd.safetensors`
-4. Завантажити зображення
+**Quick start:**
+1. Open ComfyUI: http://127.0.0.1:7821
+2. Load workflow: `video_workflow_basic.json`
+3. Choose model: `video_models/svd.safetensors`
+4. Upload image
 5. Queue Prompt!

@@ -1,52 +1,52 @@
-# Як використовувати пресети у SwarmUI
+# How to Use Presets in SwarmUI
 
-## 📖 Важлива різниця
+## 📖 Important difference
 
-### ❌ Examples (те, що ви бачили) ≠ Presets
+### ❌ Examples (what you saw) ≠ Presets
 
-**"Examples/Basic SDXL"** на вашому скріншоті - це:
-- Демонстраційні зображення (з готовими результатами)
-- Вбудовані в SwarmUI
-- НЕ можна додати свої
+**"Examples/Basic SDXL"** in your screenshot is:
+- Demo images (with ready results)
+- Built-in to SwarmUI
+- Cannot add your own
 
-**"Presets"** (те, що потрібно) - це:
-- Збережені налаштування параметрів
-- Можна створювати, імпортувати, експортувати
-- Знаходяться в окремій вкладці
+**"Presets"** (what you need) is:
+- Saved parameter settings
+- Can create, import, export
+- Located in separate tab
 
 ---
 
-## 🎯 Метод 1: Імпорт готових пресетів (РЕКОМЕНДОВАНО)
+## 🎯 Method 1: Import ready presets (RECOMMENDED)
 
-### Крок 1: Відкрити SwarmUI
+### Step 1: Open SwarmUI
 ```
 http://127.0.0.1:7801
 ```
 
-### Крок 2: Знайти вкладку "Presets"
+### Step 2: Find "Presets" tab
 
-**Варіант A:** Внизу екрану є вкладки:
+**Option A:** At bottom of screen there are tabs:
 ```
 Simple | Generate | Comfy Workflow | Utilities | User | Server
 ```
-Шукайте вкладку **"Presets"** (може бути у меню **"User"** або окремо)
+Look for **"Presets"** tab (may be in **"User"** menu or separate)
 
-**Варіант B:** Біля поля Model може бути кнопка **"💾"** або **"Presets"**
+**Option B:** Near Model field there may be **"💾"** or **"Presets"** button
 
-### Крок 3: Імпортувати пресети
+### Step 3: Import presets
 
-1. Натиснути кнопку **"Import Presets"** або **"📁 Import"**
-2. Вибрати файл:
+1. Press **"Import Presets"** or **"📁 Import"** button
+2. Select file:
    ```
    /mnt/g/Git/GitHub/ai-platform/data/AI-Platform-Presets.json
    ```
-   (або у Windows: `G:\Git\GitHub\ai-platform\data\AI-Platform-Presets.json`)
-3. Натиснути **"Import"**
-4. Закрити діалог
+   (or on Windows: `G:\Git\GitHub\ai-platform\data\AI-Platform-Presets.json`)
+3. Press **"Import"**
+4. Close dialog
 
-### Крок 4: Використовувати пресети
+### Step 4: Use presets
 
-Тепер у списку пресетів з'являться всі 9 пресетів:
+Now all 9 presets appear in presets list:
 - ✓ SDXL Portrait
 - ✓ SDXL Landscape
 - ✓ SDXL Anime
@@ -57,50 +57,50 @@ Simple | Generate | Comfy Workflow | Utilities | User | Server
 - ✓ 🐱 Cats SDXL
 - ✓ 🐱 Cats Anime
 
-Клікніть на пресет → параметри застосуються автоматично!
+Click preset → parameters apply automatically!
 
 ---
 
-## 🎯 Метод 2: Якщо не знайдете вкладку Presets
+## 🎯 Method 2: If you don't find Presets tab
 
-Можливо, у вашій версії SwarmUI UI трохи інший. Ось альтернативні способи:
+Possibly your SwarmUI version has slightly different UI. Here are alternative ways:
 
-### Спосіб A: Через Generate вкладку
+### Way A: Via Generate tab
 
-1. Відкрити вкладку **"Generate"**
-2. Шукати кнопку **"💾 Presets"** або **"📂 Load Preset"**
-3. Клікнути → з'явиться меню з пресетами
-4. Знайти **"Import"** або **"+"**
+1. Open **"Generate"** tab
+2. Look for **"💾 Presets"** or **"📂 Load Preset"** button
+3. Click → menu appears with presets
+4. Find **"Import"** or **"+"**
 
-### Спосіб B: Через User налаштування
+### Way B: Via User settings
 
-1. Вкладка **"User"** зверху
-2. Шукати розділ **"Presets"**
-3. Кнопка **"Import Presets"**
+1. **"User"** tab at top
+2. Look for **"Presets"** section
+3. **"Import Presets"** button
 
-### Спосіб C: Ручне копіювання файлу
+### Way C: Manual file copy
 
-Якщо імпорт не працює, скопіюйте файл напряму:
+If import doesn't work, copy file directly:
 
 ```bash
 cp /mnt/g/Git/GitHub/ai-platform/data/AI-Platform-Presets.json \
    /mnt/g/Git/GitHub/ai-platform/data/
 ```
 
-Потім перезапустіть SwarmUI:
+Then restart SwarmUI:
 ```bash
 docker compose restart swarmui
 ```
 
 ---
 
-## 🎯 Метод 3: Створити пресети вручну через UI
+## 🎯 Method 3: Create presets manually via UI
 
-Якщо імпорт не працює, створіть пресети вручну:
+If import doesn't work, create presets manually:
 
-### Приклад: Створюємо "Cats SDXL"
+### Example: Creating "Cats SDXL"
 
-1. **Налаштувати параметри:**
+1. **Configure parameters:**
    - Model: `juggernautXL_ragnarokBy`
    - VAE: `sdxl_vae`
    - Steps: `30`
@@ -109,123 +109,123 @@ docker compose restart swarmui
    - Size: `1024x1024`
    - Prompt: `beautiful cat, highly detailed fur texture...`
 
-2. **Зберегти:**
-   - Шукати кнопку **"💾 Save Preset"**
-   - Або **"..."** → **"Save as Preset"**
-   - Ввести назву: `Cats SDXL`
-   - Зберегти
+2. **Save:**
+   - Look for **"💾 Save Preset"** button
+   - Or **"..."** → **"Save as Preset"**
+   - Enter name: `Cats SDXL`
+   - Save
 
-3. **Повторити** для всіх 9 пресетів з файлу `AI-Platform-Presets.json`
+3. **Repeat** for all 9 presets from `AI-Platform-Presets.json` file
 
 ---
 
-## 📋 Список усіх пресетів
+## 📋 List of all presets
 
 ### 1. SDXL Portrait
 ```
 Model: juggernautXL_ragnarokBy
-Size: 1024x1344 (портрет)
-Use: Реалістичні портрети людей
+Size: 1024x1344 (portrait)
+Use: Realistic human portraits
 ```
 
 ### 2. SDXL Landscape
 ```
 Model: kodorail_v120
-Size: 1344x768 (ландшафт)
-Use: Пейзажі, локації, панорами
+Size: 1344x768 (landscape)
+Use: Landscapes, locations, panoramas
 ```
 
 ### 3. SDXL Anime
 ```
 Model: novaAnimeXL_ilV160
 Size: 1024x1024
-Use: Аніме персонажі, ілюстрації
+Use: Anime characters, illustrations
 ```
 
 ### 4. SD 1.5 Fast
 ```
 Model: dreamshaper_8
 Size: 512x512
-Use: Швидкі тести (3-5 сек)
+Use: Quick tests (3-5 sec)
 ```
 
 ### 5. Flux High Quality
 ```
 Model: zImageBase_base
 Size: 1024x1024
-Use: Максимальна якість
+Use: Maximum quality
 ```
 
 ### 6. 🔞 NSFW Flux
 ```
 Model: zImageBase_base + NSFW LoRA
 Size: 1024x1344
-Use: Дорослий контент (18+)
+Use: Adult content (18+)
 ```
 
 ### 7. 🐱 Cats Realistic
 ```
 Model: majicmixRealistic_v7
 Size: 768x768
-Use: Фотореалістичні котики
+Use: Photorealistic cats
 ```
 
 ### 8. 🐱 Cats SDXL
 ```
 Model: juggernautXL_ragnarokBy
 Size: 1024x1024
-Use: Котики у високій якості
+Use: High quality cats
 ```
 
 ### 9. 🐱 Cats Anime
 ```
 Model: novaAnimeXL_ilV160
 Size: 1024x1024
-Use: Котики в аніме стилі
+Use: Cats in anime style
 ```
 
 ---
 
-## 🔍 Де шукати кнопки у SwarmUI?
+## 🔍 Where to find buttons in SwarmUI?
 
-### Можливі розташування кнопки "Presets":
+### Possible Presets button locations:
 
 ```
 ┌────────────────────────────────────────┐
-│ SwarmUI                          [⚙️] │  ← Може бути тут
+│ SwarmUI                          [⚙️] │  ← May be here
 ├────────────────────────────────────────┤
-│ Model: [juggernautXL ▼]  [💾] [📂]   │  ← Або тут
+│ Model: [juggernautXL ▼]  [💾] [📂]   │  ← Or here
 │                                        │
 │ Prompt: [________________]             │
 │                                        │
-│ [Advanced ▼]                           │  ← Або у Advanced
+│ [Advanced ▼]                           │  ← Or in Advanced
 │   - Presets                            │
 │                                        │
 │ [Generate]                             │
 ├────────────────────────────────────────┤
-│ Simple | Generate | User | Server     │  ← Або окрема вкладка
+│ Simple | Generate | User | Server     │  ← Or separate tab
 │                           └─ Presets   │
 └────────────────────────────────────────┘
 ```
 
-**Шукайте іконки:**
-- 💾 (дискета) = Save Preset
-- 📂 (папка) = Load Preset
-- ⚙️ (шестерня) = Settings → Presets
-- ... (три крапки) = More → Presets
+**Look for icons:**
+- 💾 (floppy disk) = Save Preset
+- 📂 (folder) = Load Preset
+- ⚙️ (gear) = Settings → Presets
+- ... (three dots) = More → Presets
 
 ---
 
-## 📖 Корисні команди
+## 📖 Useful commands
 
 ```bash
-# Переглянути JSON файл з пресетами
+# View JSON file with presets
 cat /mnt/g/Git/GitHub/ai-platform/data/AI-Platform-Presets.json
 
-# Скопіювати у Windows шлях (якщо потрібно)
+# Copy to Windows path (if needed)
 # G:\Git\GitHub\ai-platform\data\AI-Platform-Presets.json
 
-# Перезапустити SwarmUI після змін
+# Restart SwarmUI after changes
 docker compose restart swarmui
 ```
 
@@ -233,27 +233,27 @@ docker compose restart swarmui
 
 ## ❓ Troubleshooting
 
-### Проблема: "Не знаходжу вкладку Presets"
+### Problem: "Cannot find Presets tab"
 
-**Рішення:**
-1. Оновіть сторінку (F5)
-2. Перевірте меню "User" або "Utilities"
-3. Використайте Ctrl+F і шукайте слово "preset" на сторінці
+**Solution:**
+1. Refresh page (F5)
+2. Check "User" or "Utilities" menu
+3. Use Ctrl+F and search for "preset" on page
 
-### Проблема: "Імпорт не працює"
+### Problem: "Import doesn't work"
 
-**Рішення:**
-1. Переконайтеся, що файл JSON правильний
-2. Спробуйте створити пресети вручну (Метод 3)
-3. Перевірте логи: `docker compose logs swarmui | grep -i preset`
+**Solution:**
+1. Check JSON file is correct
+2. Try creating presets manually (Method 3)
+3. Check logs: `docker compose logs swarmui | grep -i preset`
 
-### Проблема: "Пресет не застосовує модель"
+### Problem: "Preset doesn't apply model"
 
-**Рішення:**
-1. Перевірте, чи модель існує у списку моделей
-2. Спробуйте вибрати модель вручну після завантаження пресету
-3. Оновіть список моделей: Server → Utilities → Refresh Models
+**Solution:**
+1. Check model exists in model list
+2. Try selecting model manually after loading preset
+3. Refresh models: Server → Utilities → Refresh Models
 
 ---
 
-**Готово! Тепер у вас є 9 готових пресетів для будь-якої задачі!** 🎨✨
+**Ready! Now you have 9 ready presets for any task!** 🎨✨

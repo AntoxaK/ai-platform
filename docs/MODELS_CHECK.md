@@ -1,71 +1,71 @@
-# Перевірка моделей у SwarmUI
+# Model Check in SwarmUI
 
-## ✅ Система перезавантажена
+## ✅ System restarted
 
-**Дата:** $(date +"%d.%m.%Y %H:%M")
+**Date:** $(date +"%d.%m.%Y %H:%M")
 
-### Стан системи:
-- ✓ ComfyUI v0.11.1 — запущений (http://127.0.0.1:7821)
-- ✓ SwarmUI — запущений (http://127.0.0.1:7801)
+### System status:
+- ✓ ComfyUI v0.11.1 — running (http://127.0.0.1:7821)
+- ✓ SwarmUI — running (http://127.0.0.1:7801)
 - ✓ GPU: NVIDIA RTX 4070 (12GB VRAM)
-- ✓ Кеш метаданих очищено
+- ✓ Metadata cache cleared
 
 ---
 
-## 📦 Доступні моделі (підтверджено ComfyUI API)
+## 📦 Available models (confirmed by ComfyUI API)
 
-### Checkpoints: 8 моделей (text-to-image)
+### Checkpoints: 8 models (text-to-image)
 
-**SD 1.5 (3 моделі):**
+**SD 1.5 (3 models):**
 - ✓ dreamshaper_8.safetensors
 - ✓ majicmixRealistic_v7.safetensors
 - ✓ realisticVisionV60B1_v51HyperVAE.safetensors
 
-**SDXL (4 моделі):**
+**SDXL (4 models):**
 - ✓ hsUltrahdCG_illepic.safetensors
 - ✓ juggernautXL_ragnarokBy.safetensors
 - ✓ kodorail_v120.safetensors
 - ✓ novaAnimeXL_ilV160.safetensors
 
-**Flux (1 модель):**
+**Flux (1 model):**
 - ✓ zImageBase_base.safetensors
 
-### VAE: 3 моделі
+### VAE: 3 models
 - ✓ sdxl_vae.safetensors
 - ✓ vae-ft-mse-840000-ema-pruned.safetensors
-- ✓ pixel_space (вбудований)
+- ✓ pixel_space (built-in)
 
-### LoRA: 2 адаптери
+### LoRA: 2 adapters
 - ✓ Hands + Feet + skin v1.1.safetensors (163 MB)
 - ✓ NSFW_master_ZIT_000008766.safetensors (1.2 GB)
 
-### Video Diffusion Models: 1 модель
+### Video Diffusion Models: 1 model
 - ✓ svd.safetensors (9.0 GB) — Stable Video Diffusion (image-to-video)
 
-**Примітка:** SVD не з'являється в SwarmUI, бо використовується через ComfyUI workflows для генерації відео.
-**Докладніше:** `VIDEO_GENERATION.md`
+**Note:** SVD doesn't appear in SwarmUI because it's used via ComfyUI workflows for video generation.
+**More info:** `VIDEO_GENERATION.md`
 
 ---
 
-## 🎯 Як перевірити моделі у SwarmUI
+## 🎯 How to verify models in SwarmUI
 
-### Крок 1: Відкрити SwarmUI
+### Step 1: Open SwarmUI
 ```
 http://127.0.0.1:7801
 ```
 
-### Крок 2: Оновити список моделей (якщо потрібно)
-1. Знизу ліворуч натиснути **"Server"**
-2. Вибрати **"Utilities"**
-3. Натиснути **"Refresh Models"**
-4. Зачекати 5-10 секунд
-5. Оновити сторінку (F5)
+### Step 2: Refresh model list (if needed)
+1. Press **"Server"** bottom left
+2. Select **"Utilities"**
+3. Press **"Refresh Models"**
+4. Wait 5-10 seconds
+5. Refresh page (F5)
 
-### Крок 3: Перевірити випадаючий список
-Клікнути на поле **"Model"** зверху — має з'явитися всі 8 моделей:
+### Step 3: Check dropdown list
+Click **"Model"** field at top — should show all 8 models:
 
 ```
-Випадаюче меню "Model":
+"Model" dropdown:
 ├── dreamshaper_8
 ├── majicmixRealistic_v7
 ├── realisticVisionV60B1_v51HyperVAE
@@ -76,33 +76,33 @@ http://127.0.0.1:7801
 └── zImageBase_base
 ```
 
-**Примітка:** SVD (Stable Video Diffusion) більше не з'являється тут, бо переміщено в `models/diffusion_models/` для використання через ComfyUI workflows.
+**Note:** SVD (Stable Video Diffusion) no longer appears here because it was moved to `models/diffusion_models/` for use via ComfyUI workflows.
 
-### Крок 4: Перевірити VAE
-Якщо є поле **"VAE"** (може бути в Advanced settings):
+### Step 4: Check VAE
+If **"VAE"** field exists (may be in Advanced settings):
 
 ```
-Випадаюче меню "VAE":
+"VAE" dropdown:
 ├── Automatic
 ├── sdxl_vae
 ├── vae-ft-mse-840000-ema-pruned
 └── pixel_space
 ```
 
-### Крок 5: Перевірити LoRA
-У розділі **"LoRA"** або **"Add LoRA"**:
+### Step 5: Check LoRA
+In **"LoRA"** or **"Add LoRA"** section:
 
 ```
-Випадаюче меню "LoRA":
+"LoRA" dropdown:
 ├── Hands + Feet + skin v1.1
 └── NSFW_master_ZIT_000008766
 ```
 
 ---
 
-## 🧪 Швидкий тест
+## 🧪 Quick test
 
-### Тест 1: SD 1.5 модель
+### Test 1: SD 1.5 model
 ```
 Model: majicmixRealistic_v7
 VAE: vae-ft-mse-840000-ema-pruned
@@ -110,7 +110,7 @@ Prompt: portrait of a person
 Steps: 20
 ```
 
-### Тест 2: SDXL модель
+### Test 2: SDXL model
 ```
 Model: juggernautXL_ragnarokBy
 VAE: sdxl_vae
@@ -118,7 +118,7 @@ Prompt: beautiful landscape
 Steps: 25
 ```
 
-### Тест 3: Flux модель
+### Test 3: Flux model
 ```
 Model: zImageBase_base
 VAE: automatic
@@ -127,7 +127,7 @@ Steps: 20
 CFG: 3.5
 ```
 
-### Тест 4: SDXL + LoRA
+### Test 4: SDXL + LoRA
 ```
 Model: novaAnimeXL_ilV160
 VAE: sdxl_vae
@@ -138,27 +138,27 @@ Steps: 28
 
 ---
 
-## 🔧 Якщо моделі не видно
+## 🔧 If models not showing
 
-### 1. Оновити через UI
+### 1. Refresh via UI
 ```
-Server → Utilities → Refresh Models → Зачекати → F5
+Server → Utilities → Refresh Models → Wait → F5
 ```
 
-### 2. Перезапустити SwarmUI
+### 2. Restart SwarmUI
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform
 docker compose restart swarmui
 ```
 
-### 3. Повний перезапуск
+### 3. Full restart
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform
 ./stop.sh
 ./start.sh
 ```
 
-### 4. Очистити кеш та перезапустити
+### 4. Clear cache and restart
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform
 rm -f data/model_metadata*.ldb
@@ -167,63 +167,63 @@ docker compose restart swarmui
 
 ---
 
-## 📂 Розташування моделей
+## 📂 Model locations
 
 ```
 /mnt/g/Git/GitHub/ai-platform/models/
-├── Stable-Diffusion/      → 9 checkpoint моделей
-├── VAE/                   → 2 VAE файли
-├── Lora/                  → 2 LoRA адаптери
-└── [інші папки]
+├── Stable-Diffusion/      → 9 checkpoint models
+├── VAE/                   → 2 VAE files
+├── Lora/                  → 2 LoRA adapters
+└── [other folders]
 ```
 
 ---
 
-## 🎨 Готові пресети
+## 🎨 Ready presets
 
-У файлі `data/AI-Platform-Presets.json` є 9 готових пресетів:
+In file `data/AI-Platform-Presets.json` there are 9 ready presets:
 
-1. **SDXL Portrait** — портрети (JuggernautXL)
-2. **SDXL Landscape** — пейзажі (Kodorail)
-3. **SDXL Anime** — аніме (NovaAnimeXL)
-4. **SD 1.5 Fast** — швидка генерація (DreamShaper)
-5. **Flux High Quality** — максимальна якість (Flux)
-6. **NSFW Flux** 🔞 — дорослий контент (Flux + NSFW LoRA)
-7. **Cats Realistic** 🐱 — реалістичні котики
-8. **Cats SDXL** 🐱 — котики SDXL
-9. **Cats Anime** 🐱 — котики аніме
+1. **SDXL Portrait** — portraits (JuggernautXL)
+2. **SDXL Landscape** — landscapes (Kodorail)
+3. **SDXL Anime** — anime (NovaAnimeXL)
+4. **SD 1.5 Fast** — fast generation (DreamShaper)
+5. **Flux High Quality** — maximum quality (Flux)
+6. **NSFW Flux** 🔞 — adult content (Flux + NSFW LoRA)
+7. **Cats Realistic** 🐱 — realistic cats
+8. **Cats SDXL** 🐱 — cats SDXL
+9. **Cats Anime** 🐱 — cats anime
 
-**Як імпортувати:** Див. `HOW_TO_USE_PRESETS.md`
+**How to import:** See `HOW_TO_USE_PRESETS.md`
 
-## 📥 Завантаження нових моделей
+## 📥 Download new models
 
-**Детальний довідник:** `CIVITAI_GUIDE.md`
+**Detailed guide:** `CIVITAI_GUIDE.md`
 
-Швидкий старт:
-1. Відкрити https://civitai.com/models
-2. Фільтри:
+Quick start:
+1. Open https://civitai.com/models
+2. Filters:
    - Format: `SafeTensor` ✓
-   - Base Model: `SDXL 1.0` (рекомендовано для RTX 4070)
+   - Base Model: `SDXL 1.0` (recommended for RTX 4070)
    - Model Type: `Checkpoint`, `LoRA`, `VAE`, etc.
-3. Завантажити у відповідну папку (див. CIVITAI_GUIDE.md)
+3. Download to right folder (see CIVITAI_GUIDE.md)
 4. SwarmUI → Server → Utilities → Refresh Models
 
 ---
 
-## ✅ Контрольний список
+## ✅ Checklist
 
-- [x] ComfyUI запущений і бачить 8 text-to-image checkpoints
-- [x] ComfyUI бачить 1 video diffusion model (SVD)
-- [x] ComfyUI бачить 3 VAE
-- [x] ComfyUI бачить 2 LoRA
-- [x] SwarmUI запущений
-- [x] Кеш метаданих очищено
-- [x] Система готова до роботи
+- [x] ComfyUI running and sees 8 text-to-image checkpoints
+- [x] ComfyUI sees 1 video diffusion model (SVD)
+- [x] ComfyUI sees 3 VAE
+- [x] ComfyUI sees 2 LoRA
+- [x] SwarmUI running
+- [x] Metadata cache cleared
+- [x] System ready to work
 
-**Якщо всі моделі не відображаються у SwarmUI:**
-→ Використайте **Server → Utilities → Refresh Models** у веб-інтерфейсі
-→ Або перезапустіть: `docker compose restart swarmui`
+**If all models not showing in SwarmUI:**
+→ Use **Server → Utilities → Refresh Models** in web interface
+→ Or restart: `docker compose restart swarmui`
 
 ---
 
-**Система готова! Відкрийте http://127.0.0.1:7801 та почніть генерувати!** 🎨✨
+**System ready! Open http://127.0.0.1:7801 and start generating!** 🎨✨

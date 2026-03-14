@@ -1,26 +1,26 @@
-# Довідник Civitai для AI Platform
+# Civitai Guide for AI Platform
 
-Швидкий довідник для завантаження моделей з https://civitai.com
+Quick reference for downloading models from https://civitai.com
 
 ---
 
-## 🎯 Швидкий старт
+## 🎯 Quick start
 
-### Крок 1: Відкрити Civitai
+### Step 1: Open Civitai
 ```
 https://civitai.com/models
 ```
 
-### Крок 2: Застосувати фільтри
+### Step 2: Apply filters
 
-**Обов'язкові фільтри:**
-1. **Format**: `SafeTensor` ✓ (завжди безпечніше)
-2. **Base Model**: Виберіть одну з таблиці нижче ↓
-3. **Model Type**: Виберіть тип (Checkpoint, LoRA, etc.)
+**Required filters:**
+1. **Format**: `SafeTensor` ✓ (always safer)
+2. **Base Model**: Choose one from table below ↓
+3. **Model Type**: Choose type (Checkpoint, LoRA, etc.)
 
-### Крок 3: Завантажити у правильну папку
+### Step 3: Download to correct folder
 
-| Civitai Model Type | Папка на диску |
+| Civitai Model Type | Folder on disk |
 |-------------------|----------------|
 | Checkpoint | `G:\Git\GitHub\ai-platform\models\Stable-Diffusion\` |
 | LoRA, LoCon, LoHa | `G:\Git\GitHub\ai-platform\models\Lora\` |
@@ -28,7 +28,7 @@ https://civitai.com/models
 | Embedding, Textual Inversion | `G:\Git\GitHub\ai-platform\models\Embeddings\` |
 | ControlNet, Controlnet (T2I) | `G:\Git\GitHub\ai-platform\models\ControlNet\` |
 
-### Крок 4: Оновити SwarmUI
+### Step 4: Refresh SwarmUI
 ```
 http://127.0.0.1:7801
 → Server → Utilities → Refresh Models
@@ -36,176 +36,176 @@ http://127.0.0.1:7801
 
 ---
 
-## 📊 Фільтр Base Model — що обирати?
+## 📊 Base Model Filter — What to choose?
 
-### Для RTX 4070 (12GB VRAM)
+### For RTX 4070 (12GB VRAM)
 
-| Civitai Base Model | VRAM | Швидкість | Якість | Рекомендація |
-|-------------------|------|-----------|--------|--------------|
-| **SD 1.5** | ~4 GB ✓ | ⚡⚡⚡ Дуже швидко | ⭐⭐⭐ Добре | Для тестів, швидкої генерації |
-| **SDXL 1.0** | ~6-8 GB ✓ | ⚡⚡ Середньо | ⭐⭐⭐⭐ Відмінно | **🏆 РЕКОМЕНДОВАНО** — найкращий баланс |
-| **SDXL Turbo** | ~6 GB ✓ | ⚡⚡⚡ Швидко | ⭐⭐⭐⭐ Відмінно | Для швидкої якісної генерації |
-| **SDXL Lightning** | ~6 GB ✓ | ⚡⚡⚡ Швидко | ⭐⭐⭐⭐ Відмінно | 1-4 кроки, дуже швидко |
-| **Pony** | ~6-8 GB ✓ | ⚡⚡ Середньо | ⭐⭐⭐⭐ Відмінно | Для аніме, furry, стилізації |
-| **Flux.1 S** | ~10 GB ✓ | ⚡⚡ Швидко | ⭐⭐⭐⭐⭐ Найкраще | **🏆 Найвища якість**, 4 кроки |
-| **Flux.1 D** | ~12 GB ⚠ | ⚡ Повільно | ⭐⭐⭐⭐⭐ Найкраще | Максимальна якість (FP8!) |
-| **SD 3.5 Large** | ~12 GB ⚠ | ⚡ Повільно | ⭐⭐⭐⭐⭐ Найкраще | Нова архітектура |
-| **SD 3.5 Medium** | ~5 GB ✓ | ⚡⚡ Середньо | ⭐⭐⭐⭐ Відмінно | Легша версія SD 3.5 |
+| Civitai Base Model | VRAM | Speed | Quality | Recommendation |
+|-------------------|------|-------|---------|----------------|
+| **SD 1.5** | ~4 GB ✓ | ⚡⚡⚡ Very fast | ⭐⭐⭐ Good | For tests, quick generation |
+| **SDXL 1.0** | ~6-8 GB ✓ | ⚡⚡ Medium | ⭐⭐⭐⭐ Excellent | **🏆 RECOMMENDED** — best balance |
+| **SDXL Turbo** | ~6 GB ✓ | ⚡⚡⚡ Fast | ⭐⭐⭐⭐ Excellent | For fast quality generation |
+| **SDXL Lightning** | ~6 GB ✓ | ⚡⚡⚡ Fast | ⭐⭐⭐⭐ Excellent | 1-4 steps, very fast |
+| **Pony** | ~6-8 GB ✓ | ⚡⚡ Medium | ⭐⭐⭐⭐ Excellent | For anime, furry, styling |
+| **Flux.1 S** | ~10 GB ✓ | ⚡⚡ Fast | ⭐⭐⭐⭐⭐ Best | **🏆 Highest quality**, 4 steps |
+| **Flux.1 D** | ~12 GB ⚠ | ⚡ Slow | ⭐⭐⭐⭐⭐ Best | Maximum quality (FP8!) |
+| **SD 3.5 Large** | ~12 GB ⚠ | ⚡ Slow | ⭐⭐⭐⭐⭐ Best | New architecture |
+| **SD 3.5 Medium** | ~5 GB ✓ | ⚡⚡ Medium | ⭐⭐⭐⭐ Excellent | Lighter SD 3.5 version |
 
-**Легенда:**
-- ✓ — Працює комфортно на RTX 4070 12GB
-- ⚠ — Працює, але потребує FP8 або offloading
+**Legend:**
+- ✓ — Works comfortably on RTX 4070 12GB
+- ⚠ — Works, but needs FP8 or offloading
 
 ---
 
-## 🎨 Популярні моделі за категоріями
+## 🎨 Popular models by category
 
-### Реалістичні фото (SDXL)
+### Realistic photos (SDXL)
 
-**Фільтри Civitai:**
+**Civitai filters:**
 - Base Model: `SDXL 1.0`
 - Model Type: `Checkpoint`
 - Tags: `realistic`, `photorealistic`
 
-**Рекомендовані моделі:**
-- Juggernaut XL ✓ (вже є)
+**Recommended models:**
+- Juggernaut XL ✓ (already have)
 - RealVisXL
 - DreamshaperXL
 - ProteusV0.4
 - CopaxTimelessxlSDXL1
 
-### Аніме (SDXL/Pony)
+### Anime (SDXL/Pony)
 
-**Фільтри Civitai:**
-- Base Model: `SDXL 1.0` або `Pony`
+**Civitai filters:**
+- Base Model: `SDXL 1.0` or `Pony`
 - Model Type: `Checkpoint`
 - Tags: `anime`, `illustration`
 
-**Рекомендовані моделі:**
-- NovaAnimeXL ✓ (вже є)
+**Recommended models:**
+- NovaAnimeXL ✓ (already have)
 - AnimagineXL
 - Pony Diffusion V6
 - AutismMix (Pony)
 - AnythingXL
 
-### Пейзажі та локації (SDXL)
+### Landscapes and locations (SDXL)
 
-**Фільтри Civitai:**
+**Civitai filters:**
 - Base Model: `SDXL 1.0`
 - Model Type: `Checkpoint`
 - Tags: `landscape`, `scenery`
 
-**Рекомендовані моделі:**
-- Kodorail ✓ (вже є)
+**Recommended models:**
+- Kodorail ✓ (already have)
 - RealitiesEdgeXL
 - Copax Turbo
 
-### Швидка генерація (SD 1.5)
+### Fast generation (SD 1.5)
 
-**Фільтри Civitai:**
+**Civitai filters:**
 - Base Model: `SD 1.5`
 - Model Type: `Checkpoint`
 
-**Рекомендовані моделі:**
-- DreamShaper 8 ✓ (вже є)
-- Realistic Vision V6.0 ✓ (вже є)
-- MajicMix Realistic ✓ (вже є)
+**Recommended models:**
+- DreamShaper 8 ✓ (already have)
+- Realistic Vision V6.0 ✓ (already have)
+- MajicMix Realistic ✓ (already have)
 
-### Найвища якість (Flux)
+### Highest quality (Flux)
 
-**Фільтри Civitai:**
-- Base Model: `Flux.1 D` або `Flux.1 S`
-- Model Type: `Checkpoint` або `LoRA`
+**Civitai filters:**
+- Base Model: `Flux.1 D` or `Flux.1 S`
+- Model Type: `Checkpoint` or `LoRA`
 
-**Рекомендовані моделі:**
-- zImageBase ✓ (вже є — Flux Schnell)
-- Flux.1 Dev (офіційна, потребує FP8)
+**Recommended models:**
+- zImageBase ✓ (already have — Flux Schnell)
+- Flux.1 Dev (official, needs FP8)
 - Flux Realism LoRA
 - Flux Uncensored LoRA
 
 ---
 
-## 🔧 Додаткові типи моделей
+## 🔧 Additional model types
 
-### LoRA (адаптери стилю)
+### LoRA (style adapters)
 
-**Що таке:** Малі файли (10-200 MB), що модифікують стиль checkpoint моделі
+**What is it:** Small files (10-200 MB) that modify checkpoint model style
 
-**Фільтри Civitai:**
+**Civitai filters:**
 - Model Type: `LoRA`
-- Base Model: Той же, що у вашого checkpoint (SD 1.5, SDXL, Pony, Flux)
+- Base Model: Same as your checkpoint (SD 1.5, SDXL, Pony, Flux)
 
-**Популярні категорії:**
-- **Style LoRA**: Арт стилі (акварель, олія, аніме)
-- **Character LoRA**: Конкретні персонажі (з аніме, фільмів, ігор)
-- **Detail LoRA**: Покращення деталей (руки, обличчя, текстури)
-- **Clothing LoRA**: Одяг, костюми
-- **NSFW LoRA**: 🔞 Дорослий контент
+**Popular categories:**
+- **Style LoRA**: Art styles (watercolor, oil, anime)
+- **Character LoRA**: Specific characters (from anime, movies, games)
+- **Detail LoRA**: Detail enhancement (hands, faces, textures)
+- **Clothing LoRA**: Clothes, costumes
+- **NSFW LoRA**: 🔞 Adult content
 
-**Приклади:**
-- `Detail Tweaker LoRA` (покращення деталей)
-- `Add More Details` (різкість, деталізація)
-- `Anime Lineart LoRA` (контури)
-- Hands + Feet + skin v1.1 ✓ (вже є)
-- NSFW_master_ZIT ✓ (вже є)
+**Examples:**
+- `Detail Tweaker LoRA` (detail enhancement)
+- `Add More Details` (sharpness, detail)
+- `Anime Lineart LoRA` (outlines)
+- Hands + Feet + skin v1.1 ✓ (already have)
+- NSFW_master_ZIT ✓ (already have)
 
-**Папка:** `models/Lora/`
+**Folder:** `models/Lora/`
 
-### VAE (декодер зображень)
+### VAE (image decoder)
 
-**Що таке:** Файл, що перетворює латентний простір у фінальне зображення (кольори, різкість)
+**What is it:** File that converts latent space to final image (colors, sharpness)
 
-**Популярні:**
-- `sdxl_vae.safetensors` ✓ (вже є) — для SDXL
-- `vae-ft-mse-840000-ema-pruned.safetensors` ✓ (вже є) — для SD 1.5
+**Popular:**
+- `sdxl_vae.safetensors` ✓ (already have) — for SDXL
+- `vae-ft-mse-840000-ema-pruned.safetensors` ✓ (already have) — for SD 1.5
 
-**Примітка:** Багато моделей мають вбудований VAE ("baked-in VAE"), тому окремий не потрібен
+**Note:** Many models have built-in VAE ("baked-in VAE"), so separate not needed
 
-**Папка:** `models/VAE/`
+**Folder:** `models/VAE/`
 
-### Embeddings (текстові інверсії)
+### Embeddings (textual inversions)
 
-**Що таке:** Малі файли (10-100 KB), що додають концепти через ключові слова
+**What is it:** Small files (10-100 KB) that add concepts via keywords
 
-**Фільтри Civitai:**
-- Model Type: `Embedding` або `Textual Inversion`
+**Civitai filters:**
+- Model Type: `Embedding` or `Textual Inversion`
 
-**Популярні (для негативних промптів):**
+**Popular (for negative prompts):**
 - `EasyNegative`
 - `BadDream`
 - `UnrealisticDream`
 - `FastNegative`
 
-**Використання:** Додайте назву у промпт, наприклад: `EasyNegative` у Negative Prompt
+**Usage:** Add name in prompt, e.g.: `EasyNegative` in Negative Prompt
 
-**Папка:** `models/Embeddings/`
+**Folder:** `models/Embeddings/`
 
-### ControlNet (контроль композиції)
+### ControlNet (composition control)
 
-**Що таке:** Моделі для точного контролю композиції через референсні зображення
+**What is it:** Models for precise composition control via reference images
 
-**Фільтри Civitai:**
+**Civitai filters:**
 - Model Type: `ControlNet`
-- Base Model: Той же, що у checkpoint
+- Base Model: Same as checkpoint
 
-**Типи ControlNet:**
-- **Canny** — контури об'єктів
-- **Depth** — карта глибини
-- **OpenPose** — скелет людини (пози)
-- **Scribble** — малюнки від руки
-- **Normal map** — напрямки освітлення
-- **Lineart** — лінійні малюнки
+**ControlNet types:**
+- **Canny** — object contours
+- **Depth** — depth map
+- **OpenPose** — human skeleton (poses)
+- **Scribble** — hand drawings
+- **Normal map** — lighting directions
+- **Lineart** — line drawings
 
-**Папка:** `models/ControlNet/`
+**Folder:** `models/ControlNet/`
 
 ---
 
-## 📂 Всі папки для моделей
+## 📂 All model folders
 
 ```
 G:\Git\GitHub\ai-platform\models\
 │
-├── Stable-Diffusion\       ← Checkpoint моделі (основні)
+├── Stable-Diffusion\       ← Checkpoint models (main)
 │   ├── dreamshaper_8.safetensors (SD 1.5) ✓
 │   ├── majicmixRealistic_v7.safetensors (SD 1.5) ✓
 │   ├── realisticVisionV60B1_v51HyperVAE.safetensors (SD 1.5) ✓
@@ -216,225 +216,225 @@ G:\Git\GitHub\ai-platform\models\
 │   ├── zImageBase_base.safetensors (Flux) ✓
 │   └── svd.safetensors (Video) ✓
 │
-├── Lora\                   ← LoRA, LoCon, LoHa адаптери
+├── Lora\                   ← LoRA, LoCon, LoHa adapters
 │   ├── Hands + Feet + skin v1.1.safetensors ✓
 │   └── NSFW_master_ZIT_000008766.safetensors ✓
 │
-├── VAE\                    ← VAE декодери
+├── VAE\                    ← VAE decoders
 │   ├── sdxl_vae.safetensors ✓
 │   └── vae-ft-mse-840000-ema-pruned.safetensors ✓
 │
 ├── Embeddings\             ← Textual inversions
-│   └── (додавайте сюди)
+│   └── (add here)
 │
-├── ControlNet\             ← ControlNet моделі
-│   └── (додавайте сюди)
+├── ControlNet\             ← ControlNet models
+│   └── (add here)
 │
-├── text_encoders\          ← Text encoders для Flux/SD3
+├── text_encoders\          ← Text encoders for Flux/SD3
 │   ├── clip_l.safetensors ✓
 │   └── t5xxl_fp8_e4m3fn.safetensors ✓
 │
-├── clip_vision\            ← CLIP Vision для IP-Adapter
-│   └── (автоматично завантажується)
+├── clip_vision\            ← CLIP Vision for IP-Adapter
+│   └── (auto-loaded)
 │
-├── upscale_models\         ← Upscaler моделі (ESRGAN)
-│   └── (додавайте з OpenModelDB)
+├── upscale_models\         ← Upscaler models (ESRGAN)
+│   └── (add from OpenModelDB)
 │
-├── ipadapter\              ← IP-Adapter моделі
-│   └── (додавайте сюди)
+├── ipadapter\              ← IP-Adapter models
+│   └── (add here)
 │
 ├── animatediff_models\     ← AnimateDiff motion modules
-│   └── (для відео генерації)
+│   └── (for video generation)
 │
 ├── animatediff_motion_lora\ ← AnimateDiff LoRA
-│   └── (для відео генерації)
+│   └── (for video generation)
 │
-└── diffusion_models\       ← Спеціалізовані diffusion моделі
+└── diffusion_models\       ← Specialized diffusion models
     └── svd.safetensors ✓   (Stable Video Diffusion, 9.0 GB)
 ```
 
-**Позначка ✓** = вже встановлено
+**Mark ✓** = already installed
 
 ---
 
-## ⚙️ Після завантаження моделі
+## ⚙️ After downloading model
 
-### Варіант 1: Через веб-інтерфейс (РЕКОМЕНДОВАНО)
+### Option 1: Via web interface (RECOMMENDED)
 
-1. Відкрити SwarmUI:
+1. Open SwarmUI:
    ```
    http://127.0.0.1:7801
    ```
 
-2. Внизу зліва натиснути **"Server"**
+2. Press **"Server"** bottom left
 
-3. Вибрати **"Utilities"**
+3. Select **"Utilities"**
 
-4. Натиснути **"Refresh Models"**
+4. Press **"Refresh Models"**
 
-5. Зачекати 5-10 секунд
+5. Wait 5-10 seconds
 
-6. Оновити сторінку (F5)
+6. Refresh page (F5)
 
-### Варіант 2: Через Docker
+### Option 2: Via Docker
 
 ```bash
 cd /mnt/g/Git/GitHub/ai-platform
 docker compose restart swarmui
 ```
 
-**Примітка:** ComfyUI перезапускати НЕ потрібно — він автоматично бачить нові файли.
+**Note:** ComfyUI does NOT need to restart — it auto-detects new files.
 
 ---
 
-## 🎓 Приклади фільтрів Civitai
+## 🎓 Civitai filter examples
 
-### Приклад 1: Реалістичний портрет (SDXL)
+### Example 1: Realistic portrait (SDXL)
 
-**Фільтри:**
+**Filters:**
 - Base Model: `SDXL 1.0` ✓
 - Model Type: `Checkpoint` ✓
 - Tags: `realistic`, `portrait`, `photorealistic`
 - Format: `SafeTensor` ✓
 
-**Результат:** Знайде моделі типу JuggernautXL, RealVisXL
+**Result:** Finds models like JuggernautXL, RealVisXL
 
-**Папка:** `models/Stable-Diffusion/`
+**Folder:** `models/Stable-Diffusion/`
 
-### Приклад 2: Аніме LoRA для SDXL
+### Example 2: Anime LoRA for SDXL
 
-**Фільтри:**
+**Filters:**
 - Base Model: `SDXL 1.0` ✓
 - Model Type: `LoRA` ✓
 - Tags: `anime`, `style`
 - Format: `SafeTensor` ✓
 
-**Результат:** Знайде LoRA для аніме стилізації
+**Result:** Finds LoRA for anime styling
 
-**Папка:** `models/Lora/`
+**Folder:** `models/Lora/`
 
-### Приклад 3: ControlNet для поз (SDXL)
+### Example 3: ControlNet for poses (SDXL)
 
-**Фільтри:**
+**Filters:**
 - Base Model: `SDXL 1.0` ✓
 - Model Type: `ControlNet` ✓
 - Tags: `openpose`, `pose`
 - Format: `SafeTensor` ✓
 
-**Результат:** Знайде OpenPose ControlNet для SDXL
+**Result:** Finds OpenPose ControlNet for SDXL
 
-**Папка:** `models/ControlNet/`
+**Folder:** `models/ControlNet/`
 
-### Приклад 4: Негативні embeddings
+### Example 4: Negative embeddings
 
-**Фільтри:**
-- Base Model: `SD 1.5` або `SDXL 1.0` ✓
-- Model Type: `Embedding` або `Textual Inversion` ✓
+**Filters:**
+- Base Model: `SD 1.5` or `SDXL 1.0` ✓
+- Model Type: `Embedding` or `Textual Inversion` ✓
 - Tags: `negative`, `quality`
 
-**Результат:** Знайде EasyNegative, BadDream, etc.
+**Result:** Finds EasyNegative, BadDream, etc.
 
-**Папка:** `models/Embeddings/`
+**Folder:** `models/Embeddings/`
 
-### Приклад 5: Flux LoRA для реалізму
+### Example 5: Flux LoRA for realism
 
-**Фільтри:**
-- Base Model: `Flux.1 D` або `Flux.1 S` ✓
+**Filters:**
+- Base Model: `Flux.1 D` or `Flux.1 S` ✓
 - Model Type: `LoRA` ✓
 - Tags: `realism`, `photography`
 - Format: `SafeTensor` ✓
 
-**Результат:** Знайде Flux Realism, Flux Uncensored, etc.
+**Result:** Finds Flux Realism, Flux Uncensored, etc.
 
-**Папка:** `models/Lora/`
+**Folder:** `models/Lora/`
 
 ---
 
-## ❓ Часті питання
+## ❓ FAQ
 
-### Питання: Скільки моделей можна встановити?
+### Question: How many models can I install?
 
-**Відповідь:** Необмежено! Checkpoint моделі займають 2-12 GB кожна, LoRA — 10-200 MB. У вас є 1.2 TB вільного місця.
+**Answer:** Unlimited! Checkpoint models take 2-12 GB each, LoRA — 10-200 MB. You have 1.2 TB free space.
 
-### Питання: Чи можна використовувати SD 1.5 LoRA з SDXL моделями?
+### Question: Can I use SD 1.5 LoRA with SDXL models?
 
-**Відповідь:** Ні. LoRA повинна відповідати Base Model checkpoint моделі:
-- SD 1.5 LoRA → тільки для SD 1.5 моделей
-- SDXL LoRA → тільки для SDXL моделей
-- Flux LoRA → тільки для Flux моделей
+**Answer:** No. LoRA must match the Base Model checkpoint:
+- SD 1.5 LoRA → only for SD 1.5 models
+- SDXL LoRA → only for SDXL models
+- Flux LoRA → only for Flux models
 
-### Питання: Що таке "baked-in VAE"?
+### Question: What is "baked-in VAE"?
 
-**Відповідь:** Це означає, що модель вже містить VAE всередині. Не потрібно завантажувати окремий VAE файл.
+**Answer:** Means model already contains VAE inside. Don't need to download separate VAE file.
 
-### Питання: Навіщо потрібен окремий VAE?
+### Question: Why need separate VAE?
 
-**Відповідь:** VAE покращує кольори та різкість. Якщо модель не має baked-in VAE, або ви хочете експериментувати з різними VAE — завантажте окремий.
+**Answer:** VAE improves colors and sharpness. If model has no baked-in VAE, or you want to experiment with different VAE — download separate.
 
-### Питання: Що краще — Checkpoint чи LoRA?
+### Question: What's better — Checkpoint or LoRA?
 
-**Відповідь:**
-- **Checkpoint** = основна модель (обов'язково потрібна)
-- **LoRA** = модифікатор (додається до checkpoint)
-- Використовуйте: 1 checkpoint + 0-5 LoRA одночасно
+**Answer:**
+- **Checkpoint** = base model (required)
+- **LoRA** = modifier (added to checkpoint)
+- Use: 1 checkpoint + 0-5 LoRA simultaneously
 
-### Питання: Чому Flux моделі такі великі?
+### Question: Why are Flux models so large?
 
-**Відповідь:** Flux модульний:
+**Answer:** Flux is modular:
 - Main model: ~10 GB
-- CLIP-L: 235 MB ✓ (вже є)
-- T5-XXL (FP8): 4.6 GB ✓ (вже є)
+- CLIP-L: 235 MB ✓ (already have)
+- T5-XXL (FP8): 4.6 GB ✓ (already have)
 - VAE: ~335 MB
-- **Всього: ~15 GB**
+- **Total: ~15 GB**
 
-Але якість найвища!
+But quality is highest!
 
-### Питання: Що таке FP8 квантизація?
+### Question: What is FP8 quantization?
 
-**Відповідь:** Зменшення точності (Float Point 8-bit замість 16-bit) для економії VRAM:
-- FP16: 9.8 GB (повна точність)
-- FP8: 4.6 GB (мінімальна втрата якості)
-- Для RTX 4070 12GB використовуйте FP8!
+**Answer:** Reducing precision (Float Point 8-bit instead of 16-bit) to save VRAM:
+- FP16: 9.8 GB (full precision)
+- FP8: 4.6 GB (minimal quality loss)
+- For RTX 4070 12GB use FP8!
 
-### Питання: Де шукати Upscaler моделі?
+### Question: Where to find Upscaler models?
 
-**Відповідь:**
+**Answer:**
 - OpenModelDB: https://openmodeldb.info
 - Hugging Face: https://huggingface.co/models?pipeline_tag=image-to-image
 
-Популярні: RealESRGAN, ESRGAN, SwinIR, UltraSharp
+Popular: RealESRGAN, ESRGAN, SwinIR, UltraSharp
 
-**Папка:** `models/upscale_models/`
+**Folder:** `models/upscale_models/`
 
-### Питання: Чому SVD не з'являється в списку моделей SwarmUI?
+### Question: Why doesn't SVD appear in SwarmUI model list?
 
-**Відповідь:** SVD (Stable Video Diffusion) - це **image-to-video** модель, яка НЕ підтримує text-to-image генерацію. Вона:
-- Не має text encoder (CLIP)
-- Використовується тільки через ComfyUI workflows
-- Генерує відео з одного зображення
-- Розташована в `models/diffusion_models/`
+**Answer:** SVD (Stable Video Diffusion) is **image-to-video** model, which does NOT support text-to-image generation. It:
+- Has no text encoder (CLIP)
+- Used only via ComfyUI workflows
+- Generates video from one image
+- Located in `models/diffusion_models/`
 
-**Докладніше:** Див. `VIDEO_GENERATION.md`
+**More info:** See `VIDEO_GENERATION.md`
 
-### Питання: Як генерувати відео?
+### Question: How to generate video?
 
-**Відповідь:** Є два варіанти:
+**Answer:** Two options:
 
-**Варіант 1: SVD (image-to-video)**
-- Використовує одне зображення як вхід
-- Генерує 14-25 кадрів (~2-3 секунди)
-- Найвища якість
-- Див. `VIDEO_GENERATION.md`
+**Option 1: SVD (image-to-video)**
+- Uses one image as input
+- Generates 14-25 frames (~2-3 seconds)
+- Highest quality
+- See `VIDEO_GENERATION.md`
 
-**Варіант 2: AnimateDiff (text-to-video)**
-- Використовує текстовий промпт
-- Працює з SD 1.5 / SDXL моделями
-- Можна додавати LoRA
-- Завантажте motion modules з Civitai
+**Option 2: AnimateDiff (text-to-video)**
+- Uses text prompt
+- Works with SD 1.5 / SDXL models
+- Can add LoRA
+- Download motion modules from Civitai
 
 ---
 
-## 🔗 Корисні посилання
+## 🔗 Useful links
 
 - **Civitai**: https://civitai.com/models
 - **Hugging Face**: https://huggingface.co/models?pipeline_tag=text-to-image
@@ -443,15 +443,15 @@ docker compose restart swarmui
 
 ---
 
-## ✅ Контрольний список перед завантаженням
+## ✅ Checklist before downloading
 
-- [ ] Перевірив Base Model (SD 1.5, SDXL, Flux, etc.)
-- [ ] Перевірив Model Type (Checkpoint, LoRA, VAE, etc.)
-- [ ] Обрав формат `.safetensors` (НЕ .ckpt, НЕ .pt)
-- [ ] Перевірив розмір файлу (чи вистачить місця)
-- [ ] Знаю куди класти файл (Stable-Diffusion, Lora, VAE, etc.)
-- [ ] Знаю як оновити список моделей (Server → Utilities → Refresh Models)
+- [ ] Checked Base Model (SD 1.5, SDXL, Flux, etc.)
+- [ ] Checked Model Type (Checkpoint, LoRA, VAE, etc.)
+- [ ] Chose format `.safetensors` (NOT .ckpt, NOT .pt)
+- [ ] Checked file size (enough space?)
+- [ ] Know where to put file (Stable-Diffusion, Lora, VAE, etc.)
+- [ ] Know how to refresh models (Server → Utilities → Refresh Models)
 
 ---
 
-**Готово! Тепер ви можете завантажувати моделі з Civitai з впевненістю!** 🎨✨
+**Ready! Now you can download models from Civitai with confidence!** 🎨✨

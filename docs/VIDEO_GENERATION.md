@@ -1,169 +1,169 @@
-# Генерація відео з SVD (Stable Video Diffusion)
+# Video Generation with SVD (Stable Video Diffusion)
 
-## 📹 Що таке Image-to-Video моделі?
+## 📹 What are Image-to-Video models?
 
-**Image-to-Video (I2V)** моделі генерують короткі відео з одного зображення.
+**Image-to-Video (I2V)** models generate short videos from a single image.
 
-### Доступні моделі:
+### Available models:
 
 #### 1. SVD (Stable Video Diffusion)
-- **Розмір:** 9.0 GB
-- **Тип:** Image-to-Video базова модель
-- **Вихід:** 14-25 кадрів (~1-2 секунди)
-- **Якість:** ⭐⭐⭐☆☆ Добре
-- **Швидкість:** ⚡⚡ Середньо (2-5 хв)
+- **Size:** 9.0 GB
+- **Type:** Image-to-Video base model
+- **Output:** 14-25 frames (~1-2 seconds)
+- **Quality:** ⭐⭐⭐☆☆ Good
+- **Speed:** ⚡⚡ Medium (2-5 min)
 - **VRAM:** ~10-12 GB
-- **Особливості:** Перша популярна I2V модель, стабільна
+- **Features:** First popular I2V model, stable
 
 #### 2. WAN 2.2 High Noise (Wanxiang)
-- **Розмір:** 14 GB (FP8)
-- **Тип:** Покращена I2V модель
-- **Вихід:** 14-25 кадрів (~1-2 секунди)
-- **Якість:** ⭐⭐⭐⭐☆ Відмінно
-- **Швидкість:** ⚡ Повільно (5-10 хв)
+- **Size:** 14 GB (FP8)
+- **Type:** Improved I2V model
+- **Output:** 14-25 frames (~1-2 seconds)
+- **Quality:** ⭐⭐⭐⭐☆ Excellent
+- **Speed:** ⚡ Slow (5-10 min)
 - **VRAM:** ~12 GB
-- **Особливості:** Більше динаміки, активні рухи, експресивніше
+- **Features:** More dynamics, active motion, expressive
 
 #### 3. WAN 2.2 Low Noise
-- **Розмір:** 14 GB (FP8)
-- **Тип:** Покращена I2V модель
-- **Вихід:** 14-25 кадрів (~1-2 секунди)
-- **Якість:** ⭐⭐⭐⭐⭐ Найкраще
-- **Швидкість:** ⚡ Повільно (5-10 хв)
+- **Size:** 14 GB (FP8)
+- **Type:** Improved I2V model
+- **Output:** 14-25 frames (~1-2 seconds)
+- **Quality:** ⭐⭐⭐⭐⭐ Best
+- **Speed:** ⚡ Slow (5-10 min)
 - **VRAM:** ~12 GB
-- **Особливості:** Плавніші рухи, менше артефактів, природніше
+- **Features:** Smoother motion, fewer artifacts, more natural
 
-### Яку модель обрати?
+### Which model to choose?
 
-| Задача | Рекомендована модель |
-|--------|---------------------|
-| Швидкий тест | **SVD** |
-| Статичні сцени (пейзажі) | **WAN 2.2 Low Noise** |
-| Динамічні рухи (люди, тварини) | **WAN 2.2 High Noise** |
-| Найвища якість | **WAN 2.2 Low Noise** |
-| Обмежений VRAM (<12GB) | **SVD** |
+| Task | Recommended model |
+|------|------------------|
+| Quick test | **SVD** |
+| Static scenes (landscapes) | **WAN 2.2 Low Noise** |
+| Dynamic motion (people, animals) | **WAN 2.2 High Noise** |
+| Highest quality | **WAN 2.2 Low Noise** |
+| Limited VRAM (<12GB) | **SVD** |
 
-**Загальне:**
-- **НЕ використовують** текстові промпти (нема text encoder/CLIP)
-- **Вхід:** Одне зображення (перший кадр)
-- **Вихід:** Відео 14-25 кадрів
+**General:**
+- **DO NOT use** text prompts (no text encoder/CLIP)
+- **Input:** One image (first frame)
+- **Output:** Video 14-25 frames
 
 ---
 
-## 📂 Розташування
+## 📂 Location
 
 ```
-video_models/  (окрема папка поза models/)
+video_models/  (separate folder outside models/)
 ├── svd.safetensors  ✓  (9.0 GB)
 ├── wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors  ✓  (14 GB)
 └── wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors  ✓  (14 GB)
 ```
 
-**Важливо:**
-- ❌ Відео моделі **НЕ з'являються** в списку моделей SwarmUI
-- ❌ Відео моделі **НЕ МОЖНА** використовувати через SwarmUI UI
-- ✓ Відео моделі **ТІЛЬКИ** для ComfyUI workflows
-- ✓ ComfyUI бачить їх через symlink: `models/video_models/`
+**Important:**
+- ❌ Video models **DO NOT APPEAR** in SwarmUI model list
+- ❌ Video models **CANNOT BE USED** via SwarmUI UI
+- ✓ Video models **ONLY for** ComfyUI workflows
+- ✓ ComfyUI sees them via symlink: `models/video_models/`
 
-**Доступні моделі:**
-1. **SVD (Stable Video Diffusion)** — 9 GB, 14-25 кадрів, базова модель
-2. **WAN 2.2 High Noise** — 14 GB, покращена якість, більше динаміки
-3. **WAN 2.2 Low Noise** — 14 GB, менше шуму, плавніші рухи
+**Available models:**
+1. **SVD (Stable Video Diffusion)** — 9 GB, 14-25 frames, base model
+2. **WAN 2.2 High Noise** — 14 GB, improved quality, more dynamics
+3. **WAN 2.2 Low Noise** — 14 GB, less noise, smoother motion
 
 ---
 
-## 🎬 Як використовувати SVD
+## 🎬 How to use SVD
 
-### Варіант 1: Через ComfyUI (Рекомендовано)
+### Option 1: Via ComfyUI (Recommended)
 
-SVD потребує спеціальний workflow у ComfyUI з наступними компонентами:
+SVD requires special workflow in ComfyUI with these components:
 
-#### Базовий workflow:
+#### Basic workflow:
 
-1. **Load Image** — завантаження вхідного зображення (перший кадр)
-2. **SVD_img2vid_Conditioning** — налаштування параметрів відео
-3. **VideoLinearCFGGuidance** — контроль якості
-4. **KSampler** — генерація кадрів
-5. **VAE Decode** — декодування у відео
-6. **VHS_VideoCombine** — збірка фінального відео
+1. **Load Image** — load input image (first frame)
+2. **SVD_img2vid_Conditioning** — set video parameters
+3. **VideoLinearCFGGuidance** — quality control
+4. **KSampler** — frame generation
+5. **VAE Decode** — decode to video
+6. **VHS_VideoCombine** — assemble final video
 
-#### Параметри SVD:
+#### SVD parameters:
 
-| Параметр | Значення | Опис |
-|----------|----------|------|
-| **width** | 1024 | Ширина відео |
-| **height** | 576 | Висота відео |
-| **video_frames** | 14-25 | Кількість кадрів |
-| **motion_bucket_id** | 127 | Кількість руху (0-255, більше = більше руху) |
-| **fps** | 6-8 | Кадрів на секунду |
-| **augmentation_level** | 0.0 | Рівень аугментації (0.0-1.0) |
+| Parameter | Value | Description |
+|-----------|-------|-------------|
+| **width** | 1024 | Video width |
+| **height** | 576 | Video height |
+| **video_frames** | 14-25 | Number of frames |
+| **motion_bucket_id** | 127 | Motion amount (0-255, higher = more motion) |
+| **fps** | 6-8 | Frames per second |
+| **augmentation_level** | 0.0 | Augmentation level (0.0-1.0) |
 
-#### Крок 1: Відкрити ComfyUI
+#### Step 1: Open ComfyUI
 
 ```
 http://127.0.0.1:7821
 ```
 
-#### Крок 2: Завантажити SVD workflow
+#### Step 2: Load SVD workflow
 
-ComfyUI має вбудовані приклади для SVD:
-1. Клікнути **"Load"** → **"Default"**
-2. Шукати **"stable-video-diffusion"** або **"SVD"**
+ComfyUI has built-in examples for SVD:
+1. Click **"Load"** → **"Default"**
+2. Search for **"stable-video-diffusion"** or **"SVD"**
 
-Або створити власний workflow з нодів вище.
+Or create your own workflow from nodes above.
 
-#### Крок 2.5: Вибрати модель
+#### Step 2.5: Choose model
 
-У workflow знайдіть ноду **"ImageOnlyCheckpointLoader"** або **"CheckpointLoaderSimple"**:
+In workflow find **"ImageOnlyCheckpointLoader"** or **"CheckpointLoaderSimple"** node:
 
-**Для SVD:**
-- У полі **"ckpt_name"** виберіть: `video_models/svd.safetensors`
+**For SVD:**
+- In **"ckpt_name"** field select: `video_models/svd.safetensors`
 
-**Для WAN 2.2 High Noise:**
-- У полі **"ckpt_name"** виберіть: `video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
+**For WAN 2.2 High Noise:**
+- In **"ckpt_name"** field select: `video_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors`
 
-**Для WAN 2.2 Low Noise:**
-- У полі **"ckpt_name"** виберіть: `video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
+**For WAN 2.2 Low Noise:**
+- In **"ckpt_name"** field select: `video_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors`
 
-**Примітка:** ComfyUI автоматично бачить папку `models/video_models/` через symlink.
+**Note:** ComfyUI automatically sees `models/video_models/` folder via symlink.
 
-#### Крок 3: Завантажити вхідне зображення
+#### Step 3: Load input image
 
-- SVD працює найкраще з **статичними сценами**
-- Рекомендована роздільна здатність: **1024x576** (16:9)
-- Уникайте занадто складних сцен
+- SVD works best with **static scenes**
+- Recommended resolution: **1024x576** (16:9)
+- Avoid overly complex scenes
 
-#### Крок 4: Налаштувати параметри
+#### Step 4: Configure parameters
 
-**Для повільного руху** (subtle animation):
+**For slow motion** (subtle animation):
 ```
 motion_bucket_id: 50-100
 fps: 6
 video_frames: 14
 ```
 
-**Для динамічного руху** (active animation):
+**For dynamic motion** (active animation):
 ```
 motion_bucket_id: 150-255
 fps: 8
 video_frames: 25
 ```
 
-#### Крок 5: Запустити генерацію
+#### Step 5: Run generation
 
-- Натиснути **"Queue Prompt"**
-- Генерація займає **2-5 хвилин** на RTX 4070
-- Фінальне відео збережеться в `output/`
+- Press **"Queue Prompt"**
+- Generation takes **2-5 minutes** on RTX 4070
+- Final video saves to `output/`
 
 ---
 
-## 🎨 Workflow приклади
+## 🎨 Workflow examples
 
-### Приклад 1: Проста анімація пейзажу
+### Example 1: Simple landscape animation
 
-**Вхід:** Фото гір або лісу
+**Input:** Photo of mountains or forest
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -172,13 +172,13 @@ motion_bucket_id: 80
 fps: 6
 ```
 
-**Результат:** Легке коливання дерев, рух хмар
+**Result:** Light tree sway, cloud movement
 
-### Приклад 2: Динамічна анімація персонажа
+### Example 2: Dynamic character animation
 
-**Вхід:** Портрет або персонаж в повний зріст
+**Input:** Portrait or full-body character
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -187,13 +187,13 @@ motion_bucket_id: 180
 fps: 8
 ```
 
-**Результат:** Рух волосся, одягу, моргання
+**Result:** Hair movement, cloth movement, blinking
 
-### Приклад 3: Абстрактна анімація
+### Example 3: Abstract animation
 
-**Вхід:** Абстрактне зображення або текстури
+**Input:** Abstract image or texture
 
-**Параметри:**
+**Parameters:**
 ```
 width: 1024
 height: 576
@@ -203,146 +203,146 @@ fps: 8
 augmentation_level: 0.3
 ```
 
-**Результат:** Динамічна трансформація форм
+**Result:** Dynamic shape transformation
 
 ---
 
-## 📊 Системні вимоги
+## 📊 System requirements
 
-| Параметр | Значення |
-|----------|----------|
-| **VRAM** | ~10-12 GB (для 1024x576, 14 кадрів) |
-| **Час генерації** | 2-5 хв (RTX 4070) |
-| **Розмір моделі** | 9.0 GB |
-| **Підтримка FP16** | Так ✓ |
-| **Batch size** | 1 (SVD не підтримує batch) |
+| Parameter | Value |
+|-----------|-------|
+| **VRAM** | ~10-12 GB (for 1024x576, 14 frames) |
+| **Generation time** | 2-5 min (RTX 4070) |
+| **Model size** | 9.0 GB |
+| **FP16 support** | Yes ✓ |
+| **Batch size** | 1 (SVD doesn't support batching) |
 
 ---
 
-## 🚀 Варіант 2: Альтернативні методи
+## 🚀 Option 2: Alternative methods
 
-### AnimateDiff (для text-to-video)
+### AnimateDiff (for text-to-video)
 
-Якщо вам потрібна генерація відео **з текстового промпту**, використайте AnimateDiff:
+If you need video generation **from text prompt**, use AnimateDiff:
 
-1. Завантажити AnimateDiff motion module з Civitai:
+1. Download AnimateDiff motion module from Civitai:
    - Base Model: `AnimateDiff`
    - Model Type: `Motion Module`
 
-2. Помістити у папку:
+2. Place in folder:
    ```
    models/animatediff_models/
    ```
 
-3. Використати AnimateDiff workflow у ComfyUI
+3. Use AnimateDiff workflow in ComfyUI
 
-**Переваги AnimateDiff:**
-- Підтримує текстові промпти
-- Працює з SD 1.5 / SDXL моделями
-- Можна додавати LoRA для стилізації
+**AnimateDiff advantages:**
+- Supports text prompts
+- Works with SD 1.5 / SDXL models
+- Can add LoRA for styling
 
-**Недоліки:**
-- Нижча якість ніж SVD
-- Потребує більше VRAM
-
----
-
-## ⚠️ Обмеження SVD
-
-1. **Немає текстових промптів** — SVD не розуміє текст, тільки зображення
-2. **Короткі відео** — максимум 25 кадрів (~3 секунди при 8 fps)
-3. **Статичні сцени** — найкраще працює з нерухомими об'єктами
-4. **Висока VRAM** — потребує ~10-12 GB для повної якості
-5. **Повільна генерація** — 2-5 хвилин на одне відео
+**AnimateDiff disadvantages:**
+- Lower quality than SVD
+- Needs more VRAM
 
 ---
 
-## 🎯 Поради для кращих результатів
+## ⚠️ SVD limitations
 
-### Підготовка вхідного зображення:
+1. **No text prompts** — SVD doesn't understand text, only images
+2. **Short videos** — maximum 25 frames (~3 seconds at 8 fps)
+3. **Static scenes** — works best with stationary objects
+4. **High VRAM** — needs ~10-12 GB for full quality
+5. **Slow generation** — 2-5 minutes per video
 
-1. **Роздільна здатність:** 1024x576 (16:9) або 768x768 (1:1)
-2. **Якість:** Високе розширення, добре освітлення
-3. **Композиція:** Уникайте занадто складних сцен
-4. **Стиль:** Реалістичні зображення працюють краще
+---
 
-### Налаштування параметрів:
+## 🎯 Tips for better results
+
+### Prepare input image:
+
+1. **Resolution:** 1024x576 (16:9) or 768x768 (1:1)
+2. **Quality:** High definition, good lighting
+3. **Composition:** Avoid overly complex scenes
+4. **Style:** Realistic images work better
+
+### Adjust parameters:
 
 1. **motion_bucket_id:**
-   - 0-50: Майже статичне зображення
-   - 50-100: Легкий рух (вітер, хмари)
-   - 100-150: Помірний рух (ходьба, жести)
-   - 150-255: Сильний рух (біг, активні дії)
+   - 0-50: Almost static image
+   - 50-100: Light motion (wind, clouds)
+   - 100-150: Moderate motion (walking, gestures)
+   - 150-255: Strong motion (running, active actions)
 
 2. **video_frames:**
-   - 14 кадрів = ~2 секунди (швидше, менше VRAM)
-   - 25 кадрів = ~3 секунди (довше, більше VRAM)
+   - 14 frames = ~2 seconds (faster, less VRAM)
+   - 25 frames = ~3 seconds (longer, more VRAM)
 
 3. **fps:**
-   - 6 fps: Повільна, плавна анімація
-   - 8 fps: Стандартна швидкість
-   - 12 fps: Швидка, динамічна анімація
+   - 6 fps: Slow, smooth animation
+   - 8 fps: Standard speed
+   - 12 fps: Fast, dynamic animation
 
-### Оптимізація VRAM:
+### Optimize VRAM:
 
-Якщо генерація виходить за межі 12GB:
-- Зменшити `video_frames` до 14
-- Зменшити роздільність до 768x576
-- Використати `--lowvram` флаг у ComfyUI
+If generation exceeds 12GB:
+- Reduce `video_frames` to 14
+- Reduce resolution to 768x576
+- Use `--lowvram` flag in ComfyUI
 
 ---
 
-## 📖 Корисні ресурси
+## 📖 Useful resources
 
-- **Офіційний репозиторій SVD:** https://github.com/Stability-AI/generative-models
-- **ComfyUI workflows для SVD:** https://comfyanonymous.github.io/ComfyUI_examples/
-- **AnimateDiff моделі (альтернатива):** https://civitai.com/models?tag=AnimateDiff
+- **Official SVD repository:** https://github.com/Stability-AI/generative-models
+- **ComfyUI workflows for SVD:** https://comfyanonymous.github.io/ComfyUI_examples/
+- **AnimateDiff models (alternative):** https://civitai.com/models?tag=AnimateDiff
 
 ---
 
 ## 🔧 Troubleshooting
 
-### Проблема: "Out of memory" під час генерації
+### Problem: "Out of memory" during generation
 
-**Рішення:**
-1. Зменшити `video_frames` до 14
-2. Зменшити роздільність (768x576 замість 1024x576)
-3. Закрити SwarmUI під час генерації відео
-4. Використати `--lowvram` режим у ComfyUI
+**Solution:**
+1. Reduce `video_frames` to 14
+2. Reduce resolution (768x576 instead of 1024x576)
+3. Close SwarmUI during video generation
+4. Use `--lowvram` mode in ComfyUI
 
-### Проблема: Відео занадто статичне
+### Problem: Video is too static
 
-**Рішення:**
-1. Збільшити `motion_bucket_id` до 150-200
-2. Збільшити `fps` до 8-12
-3. Використати вхідне зображення з динамічними елементами
+**Solution:**
+1. Increase `motion_bucket_id` to 150-200
+2. Increase `fps` to 8-12
+3. Use input image with dynamic elements
 
-### Проблема: Відео занадто хаотичне
+### Problem: Video is too chaotic
 
-**Рішення:**
-1. Зменшити `motion_bucket_id` до 50-100
-2. Зменшити `augmentation_level` до 0.0
-3. Використати більш статичне вхідне зображення
+**Solution:**
+1. Reduce `motion_bucket_id` to 50-100
+2. Reduce `augmentation_level` to 0.0
+3. Use more static input image
 
-### Проблема: Низька якість відео
+### Problem: Low video quality
 
-**Рішення:**
-1. Використати якісне вхідне зображення (1024x576)
-2. Збільшити `video_frames` до 25
-3. Збільшити `steps` у KSampler до 25-30
-
----
-
-## ✅ Контрольний список
-
-- [x] SVD модель переміщена в `models/diffusion_models/`
-- [ ] Відкрити ComfyUI (http://127.0.0.1:7821)
-- [ ] Завантажити SVD workflow (Load → Default → Stable Video Diffusion)
-- [ ] Підготувати вхідне зображення (1024x576 рекомендовано)
-- [ ] Налаштувати параметри (motion_bucket_id, fps, video_frames)
-- [ ] Запустити генерацію (Queue Prompt)
-- [ ] Перевірити результат в `output/` папці
+**Solution:**
+1. Use high-quality input image (1024x576)
+2. Increase `video_frames` to 25
+3. Increase `steps` in KSampler to 25-30
 
 ---
 
-**SVD готовий до використання! Відкрийте ComfyUI і експериментуйте з генерацією відео!** 🎬✨
+## ✅ Checklist
+
+- [x] SVD model moved to `models/diffusion_models/`
+- [ ] Open ComfyUI (http://127.0.0.1:7821)
+- [ ] Load SVD workflow (Load → Default → Stable Video Diffusion)
+- [ ] Prepare input image (1024x576 recommended)
+- [ ] Configure parameters (motion_bucket_id, fps, video_frames)
+- [ ] Run generation (Queue Prompt)
+- [ ] Check result in `output/` folder
+
+---
+
+**SVD is ready to use! Open ComfyUI and experiment with video generation!** 🎬✨
