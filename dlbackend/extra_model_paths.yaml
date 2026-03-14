@@ -1,0 +1,33 @@
+# Model paths for host-based ComfyUI
+# Relative path from dlbackend/ComfyUI to ai-platform/models
+
+ai_platform:
+    base_path: ../../models
+    is_default: true
+    checkpoints: |
+       Stable-Diffusion
+    vae: |
+       VAE
+    loras: |
+       Lora
+       LyCORIS
+    upscale_models: |
+       ESRGAN
+       RealESRGAN
+       SwinIR
+       upscale-models
+       upscale_models
+    embeddings: |
+       Embeddings
+       embeddings
+    controlnet: |
+       controlnet
+       ControlNet
+    clip: |
+       text_encoders
+       clip
+       CLIP
+    clip_vision: |
+       clip_vision
+    unet: |
+       unet

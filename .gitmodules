@@ -1,0 +1,3 @@
+[submodule "dlbackend/ComfyUI"]
+	path = dlbackend/ComfyUI
+	url = https://github.com/comfyanonymous/ComfyUI.git

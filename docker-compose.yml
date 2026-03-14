@@ -1,0 +1,129 @@
+# AI Platform - Full Docker Stack
+#
+# Services:
+#   - SwarmUI (port 7801) - Web UI for image generation
+#   - Ollama (port 11434) - Local LLM inference
+#   - ComfyUI runs on host (port 7821) for direct GPU access
+#
+# Usage:
+#   ./start.sh   - Start all services
+#   ./stop.sh    - Stop and cleanup
+
+services:
+  swarmui:
+    image: swarmui:production
+    container_name: swarmui
+
+    # Run as current user to avoid permission issues
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+
+    # Use host network for initial setup (ComfyUI download)
+    # After setup complete, can switch back to bridge network
+    network_mode: host
+
+    # Build from patched Dockerfile (fixes Debian package names)
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        UID: "${HOST_UID:-1000}"
+
+
+    # Bind mounts for full control and transparency
+    volumes:
+      # Persistent data (config, sessions, etc.)
+      - ./data:/SwarmUI/Data
+
+      # Models directory - organized by type
+      - ./models:/SwarmUI/Models
+
+      # Generated images output
+      - ./output:/SwarmUI/Output
+
+      # ComfyUI backend - bind mount for host-based ComfyUI
+      # ComfyUI runs on host for direct GPU access, SwarmUI connects via host network
+      - ./dlbackend:/SwarmUI/dlbackend
+
+      # ComfyUI custom nodes
+      - swarmui-dlnodes:/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/DLNodes
+
+      # Extensions
+      - swarmui-extensions:/SwarmUI/src/Extensions
+
+      # Custom ComfyUI workflows
+      - ./workflows:/SwarmUI/src/BuiltinExtensions/ComfyUIBackend/CustomWorkflows
+
+    # NVIDIA RTX 4070 GPU configuration
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # Prevent auto-restart to maintain clean lifecycle
+    restart: "no"
+
+    # Environment
+    environment:
+      # Disable telemetry if any
+      - DOTNET_CLI_TELEMETRY_OPTOUT=1
+      # CUDA optimization for RTX 40-series
+      - CUDA_VISIBLE_DEVICES=0
+      # Fix for NuGet restore - dotnet needs writable HOME
+      - HOME=/tmp/dotnet-home
+      # Use ComfyUI venv Python (prepend to PATH)
+      - PATH=/SwarmUI/dlbackend/ComfyUI/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+      # Python virtual environment
+      - VIRTUAL_ENV=/SwarmUI/dlbackend/ComfyUI/venv
+
+  # ============================================
+  # Ollama - Local LLM Inference
+  # ============================================
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+
+    # Bind to localhost only (security)
+    ports:
+      - "127.0.0.1:11434:11434"
+
+    # Model persistence (bind mount for direct access)
+    volumes:
+      - ./ollama-models:/root/.ollama
+
+    # NVIDIA GPU configuration (shares with ComfyUI on host)
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+
+    # VRAM management for shared GPU (RTX 4070 - 12GB)
+    environment:
+      - OLLAMA_KEEP_ALIVE=5m              # Unload model after 5min idle
+      - OLLAMA_MAX_LOADED_MODELS=1        # Single model in VRAM
+      - OLLAMA_FLASH_ATTENTION=1          # Memory optimization (~20-30% savings)
+      - OLLAMA_KV_CACHE_TYPE=q8_0         # 8-bit K/V cache
+      - CUDA_VISIBLE_DEVICES=0            # Explicit GPU selection
+
+    # Health check (wget since curl not in ollama image)
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O- http://localhost:11434/api/tags || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+    # No auto-restart for clean lifecycle
+    restart: "no"
+
+# Named volumes for internal state (extensions, custom nodes)
+volumes:
+  swarmui-dlnodes:
+    name: swarmui-dlnodes
+  swarmui-extensions:
+    name: swarmui-extensions

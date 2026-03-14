@@ -1,0 +1,20 @@
+# Pre-build dotnet application on top of existing swarmui:local
+# This avoids network issues during build by using cached image
+
+FROM swarmui:local
+
+# Pre-build SwarmUI during image build
+# The base image already has all dependencies
+WORKDIR /SwarmUI
+ENV HOME=/tmp
+
+# Remove old build artifacts if any
+RUN rm -rf ./src/bin ./src/obj 2>/dev/null || true
+
+# Build (this needs network for NuGet - run with --network=host)
+RUN dotnet restore && dotnet build -c Release
+
+# Reset to root workdir
+WORKDIR /
+
+# Entrypoint is inherited from base image

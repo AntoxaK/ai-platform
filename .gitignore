@@ -1,0 +1,65 @@
+# SwarmUI repository (cloned at runtime)
+swarmui/
+
+# Runtime data (fully ignored)
+data/
+
+# Generated images - ignore contents, keep directory via .gitkeep
+output/*
+
+# Image generation models (large files, manage separately)
+models/*.safetensors
+models/*.ckpt
+models/*.pt
+models/*.bin
+models/**/*.safetensors
+models/**/*.ckpt
+models/**/*.pt
+models/**/*.bin
+
+# Additional binary model formats
+models/**/*.gguf
+models/**/*.ggml
+models/**/*.onnx
+
+# LLM models (Ollama) - ignore contents, keep directory via .gitkeep
+ollama-models/*
+
+# Video models directory (large, user-managed) - ignore contents, keep directory via .gitkeep
+video_models/*
+
+# Python runtime
+dlbackend/ComfyUI/venv/
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# .NET runtime cache
+dlbackend/linuxhome/
+
+# Keep model directory structure
+!models/.gitkeep
+!models/*/.gitkeep
+!models/Stable-Diffusion/.gitkeep
+!models/diffusion_models/.gitkeep
+!models/text_encoders/.gitkeep
+!models/Lora/.gitkeep
+!models/VAE/.gitkeep
+!models/ControlNet/.gitkeep
+!models/Embeddings/.gitkeep
+!models/clip_vision/.gitkeep
+!models/upscale_models/.gitkeep
+!models/ipadapter/.gitkeep
+!models/animatediff_models/.gitkeep
+!video_models/.gitkeep
+!ollama-models/.gitkeep
+!output/.gitkeep
+
+# Workflows: ignore user-generated, keep examples
+workflows/*
+!workflows/Examples/
+!workflows/Examples/**
+
+# Docker build cache
+.docker/
