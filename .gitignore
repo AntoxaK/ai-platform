@@ -37,6 +37,7 @@ dlbackend/ComfyUI/venv/
 
 # .NET runtime cache
 dlbackend/linuxhome/
+dlbackend/ComfyUI/
 
 # Keep model directory structure
 !models/.gitkeep
