@@ -140,14 +140,12 @@ http://127.0.0.1:7801
 - **Character LoRA**: Specific characters (from anime, movies, games)
 - **Detail LoRA**: Detail enhancement (hands, faces, textures)
 - **Clothing LoRA**: Clothes, costumes
-- **NSFW LoRA**: 🔞 Adult content
 
 **Examples:**
 - `Detail Tweaker LoRA` (detail enhancement)
 - `Add More Details` (sharpness, detail)
 - `Anime Lineart LoRA` (outlines)
 - Hands + Feet + skin v1.1 ✓ (already have)
-- NSFW_master_ZIT ✓ (already have)
 
 **Folder:** `models/Lora/`
 
@@ -217,8 +215,7 @@ G:\Git\GitHub\ai-platform\models\
 │   └── svd.safetensors (Video) ✓
 │
 ├── Lora\                   ← LoRA, LoCon, LoHa adapters
-│   ├── Hands + Feet + skin v1.1.safetensors ✓
-│   └── NSFW_master_ZIT_000008766.safetensors ✓
+│   └── Hands + Feet + skin v1.1.safetensors ✓
 │
 ├── VAE\                    ← VAE decoders
 │   ├── sdxl_vae.safetensors ✓

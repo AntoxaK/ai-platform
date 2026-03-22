@@ -35,9 +35,8 @@
 - ✓ vae-ft-mse-840000-ema-pruned.safetensors
 - ✓ pixel_space (built-in)
 
-### LoRA: 2 adapters
+### LoRA: 1 adapter
 - ✓ Hands + Feet + skin v1.1.safetensors (163 MB)
-- ✓ NSFW_master_ZIT_000008766.safetensors (1.2 GB)
 
 ### Video Diffusion Models: 1 model
 - ✓ svd.safetensors (9.0 GB) — Stable Video Diffusion (image-to-video)
@@ -90,12 +89,11 @@ If **"VAE"** field exists (may be in Advanced settings):
 ```
 
 ### Step 5: Check LoRA
-In **"LoRA"** or **"Add LoRA"** section:
+In **"LoRA"** or **"Add LoRA"** section (if available):
 
 ```
 "LoRA" dropdown:
-├── Hands + Feet + skin v1.1
-└── NSFW_master_ZIT_000008766
+└── Hands + Feet + skin v1.1
 ```
 
 ---
@@ -181,17 +179,16 @@ docker compose restart swarmui
 
 ## 🎨 Ready presets
 
-In file `data/AI-Platform-Presets.json` there are 9 ready presets:
+In file `data/AI-Platform-Presets.json` there are 8 ready presets:
 
 1. **SDXL Portrait** — portraits (JuggernautXL)
 2. **SDXL Landscape** — landscapes (Kodorail)
 3. **SDXL Anime** — anime (NovaAnimeXL)
 4. **SD 1.5 Fast** — fast generation (DreamShaper)
 5. **Flux High Quality** — maximum quality (Flux)
-6. **NSFW Flux** 🔞 — adult content (Flux + NSFW LoRA)
-7. **Cats Realistic** 🐱 — realistic cats
-8. **Cats SDXL** 🐱 — cats SDXL
-9. **Cats Anime** 🐱 — cats anime
+6. **Cats Realistic** 🐱 — realistic cats
+7. **Cats SDXL** 🐱 — cats SDXL
+8. **Cats Anime** 🐱 — cats anime
 
 **How to import:** See `HOW_TO_USE_PRESETS.md`
 
@@ -215,7 +212,7 @@ Quick start:
 - [x] ComfyUI running and sees 8 text-to-image checkpoints
 - [x] ComfyUI sees 1 video diffusion model (SVD)
 - [x] ComfyUI sees 3 VAE
-- [x] ComfyUI sees 2 LoRA
+- [x] ComfyUI sees 1 LoRA
 - [x] SwarmUI running
 - [x] Metadata cache cleared
 - [x] System ready to work

@@ -46,13 +46,12 @@ Look for **"Presets"** tab (may be in **"User"** menu or separate)
 
 ### Step 4: Use presets
 
-Now all 9 presets appear in presets list:
+Now all 8 presets appear in presets list:
 - ✓ SDXL Portrait
 - ✓ SDXL Landscape
 - ✓ SDXL Anime
 - ✓ SD 1.5 Fast
 - ✓ Flux High Quality
-- ✓ 🔞 NSFW Flux
 - ✓ 🐱 Cats Realistic
 - ✓ 🐱 Cats SDXL
 - ✓ 🐱 Cats Anime
@@ -115,7 +114,7 @@ If import doesn't work, create presets manually:
    - Enter name: `Cats SDXL`
    - Save
 
-3. **Repeat** for all 9 presets from `AI-Platform-Presets.json` file
+3. **Repeat** for all 8 presets from `AI-Platform-Presets.json` file
 
 ---
 
@@ -156,28 +155,21 @@ Size: 1024x1024
 Use: Maximum quality
 ```
 
-### 6. 🔞 NSFW Flux
-```
-Model: zImageBase_base + NSFW LoRA
-Size: 1024x1344
-Use: Adult content (18+)
-```
-
-### 7. 🐱 Cats Realistic
+### 6. 🐱 Cats Realistic
 ```
 Model: majicmixRealistic_v7
 Size: 768x768
 Use: Photorealistic cats
 ```
 
-### 8. 🐱 Cats SDXL
+### 7. 🐱 Cats SDXL
 ```
 Model: juggernautXL_ragnarokBy
 Size: 1024x1024
 Use: High quality cats
 ```
 
-### 9. 🐱 Cats Anime
+### 8. 🐱 Cats Anime
 ```
 Model: novaAnimeXL_ilV160
 Size: 1024x1024
@@ -256,4 +248,4 @@ docker compose restart swarmui
 
 ---
 
-**Ready! Now you have 9 ready presets for any task!** 🎨✨
+**Ready! Now you have 8 ready presets for any task!** 🎨✨

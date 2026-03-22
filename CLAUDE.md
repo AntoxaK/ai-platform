@@ -365,7 +365,6 @@ models/
   - Style LoRAs (anime, realism, art styles)
   - Character LoRAs (specific characters)
   - Concept LoRAs (poses, lighting, details)
-  - NSFW LoRAs (adult content)
 - **Usage**: Weight 0.5-1.0 (experiment)
 
 #### VAE (Variational Autoencoder)
