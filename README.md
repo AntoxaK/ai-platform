@@ -117,3 +117,8 @@ ai-platform/
 ├── docs/                 # Guides and documentation
 └── output/               # Generated images (gitignored)
 ```
+
+## Acknowledgments
+
+Built with assistance from [Claude](https://claude.ai) (Anthropic AI) —
+used for code generation, documentation, and architecture design.
